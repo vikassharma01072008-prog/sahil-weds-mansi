@@ -65,23 +65,6 @@
         @keyframes wave { 0% { transform: scale(0.8); opacity: 0.8; } 100% { transform: scale(1.8); opacity: 0; } }
 
         /* ============================================================
-           FALLING FLOWERS
-           ============================================================ */
-        .flower-container {
-            position: fixed; inset: 0; z-index: 99; pointer-events: none; overflow: hidden;
-        }
-        .falling-flower {
-            position: absolute; top: -100px; width: 40px; height: auto;
-            animation: fall linear infinite; opacity: 0.8;
-        }
-        @keyframes fall {
-            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.8; }
-            90% { opacity: 0.8; }
-            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
-        }
-
-        /* ============================================================
            OPENING VIDEO
            ============================================================ */
         #opening {
@@ -98,6 +81,39 @@
         }
         .video-elephant.left { left: -2%; }
         .video-elephant.right { right: -2%; }
+
+        .tap-overlay {
+            position: absolute; inset: 0; z-index: 15;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            background: rgba(43, 6, 10, 0.4); backdrop-filter: blur(3px); cursor: pointer;
+            transition: opacity 0.5s ease;
+        }
+        .tap-overlay.hidden { opacity: 0; pointer-events: none; }
+        .play-btn {
+            width: 90px; height: 90px; border-radius: 50%;
+            border: 2px solid var(--gold); display: flex; align-items: center; justify-content: center;
+            background: rgba(196, 154, 69, 0.4); animation: pulseGold 2s infinite;
+        }
+        .play-btn svg { width: 40px; height: 40px; fill: var(--gold-light); margin-left: 8px; }
+        .tap-text { margin-top: 20px; font-family: var(--font-heading); font-size: 1rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold-light); text-shadow: 0 2px 5px #000; }
+        @keyframes pulseGold { 0%, 100% { box-shadow: 0 0 0 0 rgba(196, 154, 69, 0.7); } 50% { box-shadow: 0 0 0 20px rgba(196, 154, 69, 0); } }
+
+        /* ============================================================
+           FALLING FLOWERS (ANIMATION)
+           ============================================================ */
+        .flower-container {
+            position: fixed; inset: 0; z-index: 99; pointer-events: none; overflow: hidden;
+        }
+        .falling-flower {
+            position: absolute; top: -100px; width: 40px; height: auto;
+            animation: fall linear infinite; opacity: 0.8;
+        }
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
 
         /* ============================================================
            MAIN SECTIONS
@@ -116,9 +132,20 @@
         
         .peacock-divider { width: 140px; margin: 20px auto; display: block; opacity: 0.9; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5)); }
 
-        /* HERO */
+        /* ============================================================
+           STATIC FLOWERS (DECORATION)
+           ============================================================ */
+        .static-flower {
+            position: absolute; width: 120px; height: auto; z-index: 2; pointer-events: none; opacity: 0.85;
+        }
+        .static-flower.tl { top: 0; left: 0; transform: rotate(0deg); }
+        .static-flower.tr { top: 0; right: 0; transform: scaleX(-1); }
+        .static-flower.bl { bottom: 0; left: 0; transform: scaleY(-1); }
+        .static-flower.br { bottom: 0; right: 0; transform: scale(-1, -1); }
+
+        /* HERO (Palace Visible) */
         #hero { background: url('assets/palace.jpeg') center/cover fixed; }
-        #hero .bg-overlay { position: absolute; inset: 0; background: rgba(253, 251, 247, 0.4); z-index: 1; }
+        #hero .bg-overlay { position: absolute; inset: 0; background: rgba(253, 251, 247, 0.3); z-index: 1; } /* Very light tint */
 
         .hero-para { font-size: 1.3rem; line-height: 1.6; color: var(--maroon-text); margin-bottom: 30px; font-style: italic; font-weight: 600; position: relative; z-index: 5;}
         .hero-couple-grid { display: flex; flex-direction: column; gap: 30px; margin-bottom: 40px; position: relative; z-index: 5;}
@@ -131,7 +158,7 @@
         .hero-weds-center { font-family: var(--font-script); font-size: clamp(3rem, 8vw, 4.5rem); color: var(--maroon-text); margin: 20px 0; text-align: center; }
         .hero-couple { position: relative; margin: 0 auto; width: 90%; max-width: 400px; z-index: 10; filter: drop-shadow(0 15px 30px rgba(0,0,0,0.5)); }
 
-        /* EVENTS & VENUE (Fixing full image heights) */
+        /* EVENTS */
         #events { background: url('assets/otherbg.jpeg') center/cover fixed; }
         #events .bg-overlay { position: absolute; inset: 0; background: rgba(43, 6, 10, 0.7); z-index: 1; }
 
@@ -139,8 +166,6 @@
         @media(min-width: 768px) { .events-wrapper { grid-template-columns: 1fr 1fr; } }
 
         .event-box { background-color: rgba(43, 6, 10, 0.95); border: 1px solid var(--gold); border-radius: 16px; overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.8); text-align: center; }
-        
-        /* Prevent cropping of tall images */
         .event-img { width: 100%; height: auto; display: block; border-bottom: 1px solid var(--gold); }
         
         .event-content { padding: 30px 20px; }
@@ -153,11 +178,12 @@
         .btn-loc { display: inline-block; margin-top: 20px; padding: 12px 30px; background-color: var(--maroon-text); color: var(--gold-light); font-family: var(--font-heading); font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; border-radius: 99px; border: 1px solid var(--gold); transition: all 0.3s ease; }
         .btn-loc:hover { background-color: var(--gold); color: var(--maroon-deep); }
 
+        /* VENUE */
         #venue { background: url('assets/palace.jpeg') center/cover fixed; }
         #venue .bg-overlay { position: absolute; inset: 0; background: rgba(43, 6, 10, 0.8); z-index: 1; }
 
         .venue-card { max-width: 450px; margin: 0 auto; border: 2px solid var(--gold); border-radius: 16px; overflow: hidden; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.8); z-index: 5; }
-        .venue-card img { width: 100%; height: auto; display: block; }
+        .venue-card img { width: 100%; display: block; }
         .venue-card .btn-loc { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background-color: rgba(43, 6, 10, 0.95); width: 85%; }
 
         /* SCRATCH */
@@ -202,13 +228,11 @@
         .footer-brand { font-family: var(--font-script); font-size: 2.5rem; color: #ffffff; margin-top: 30px; }
 
         .reveal { opacity: 0; transform: translateY(50px); }
-        .slide-left-init { opacity: 0; transform: translateX(-100px); }
-        .slide-right-init { opacity: 0; transform: translateX(100px); }
     </style>
 </head>
 <body>
 
-    <!-- FLOWERS CONTAINER -->
+    <!-- FALLING FLOWERS CONTAINER -->
     <div class="flower-container" id="flower-container"></div>
 
     <!-- MUSIC BUTTON -->
@@ -221,10 +245,17 @@
 
     <!-- OPENING VIDEO -->
     <div id="opening">
-        <video id="opening-video" src="assets/opening.mp4" playsinline autoplay muted></video>
+        <video id="opening-video" src="assets/opening.mp4" playsinline preload="auto"></video>
         
         <img src="assets/elephantleft-removebg-preview.png" class="video-elephant left" alt="" />
         <img src="assets/elephantright-removebg-preview.png" class="video-elephant right" alt="" />
+        
+        <div class="tap-overlay" id="tap-overlay">
+            <div class="play-btn">
+                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+            <div class="tap-text">Tap to Open</div>
+        </div>
     </div>
 
     <!-- MAIN WEBSITE -->
@@ -233,22 +264,24 @@
         <!-- HERO -->
         <section class="section" id="hero">
             <div class="bg-overlay"></div>
+            <!-- Static decorations -->
+            <img src="assets/flower1.png" class="static-flower tl" alt="" />
+            <img src="assets/flower1.png" class="static-flower br" alt="" />
+
             <div class="section-inner">
                 <img src="assets/ganesha.png" alt="" style="width: 140px; margin: 0 auto 15px; position:relative; z-index:5;" class="reveal" />
                 <p class="section-kicker reveal" style="color:var(--maroon-text); font-weight:700; position:relative; z-index:5;">विघ्न हरण मंगल करन श्री गणपति महाराज, प्रथम निमंत्रण आपको पूर्ण करियो काज ||</p>
                 <p class="hero-para reveal">With divine blessings of family<br/>we cordially invite you for celebrating the wedding of</p>
                 
                 <div class="hero-couple-grid">
-                    <!-- Male Side (Slides from Left) -->
-                    <div class="hero-side slide-left-init" id="groom-side">
+                    <div class="hero-side" id="groom-side">
                         <h2 class="hero-name-rich">Sahil Sharma</h2>
                         <p class="hero-desc">Grandson of Late Smt Anguri Devi W/o Late Shri Maduram Sharma,<br/>Smt Savitri Devi W/o Shri Satyawan Sharma,<br/>Barot, Kaithal, Haryana</p>
                     </div>
 
                     <div class="hero-weds-center reveal">weds</div>
 
-                    <!-- Female Side (Slides from Right) -->
-                    <div class="hero-side slide-right-init" id="bride-side">
+                    <div class="hero-side" id="bride-side">
                         <h2 class="hero-name-rich">Mansi Sharma</h2>
                         <p class="hero-desc">Grand Daughter of Late Smt Kamala Devi W/o Shri Parashram Ji<br/>Smt Anita Sharma W/o Shri Rajesh Sharma,<br/>Ahmadpur Majra, Gohana, Sonipat, Haryana</p>
                     </div>
@@ -257,35 +290,36 @@
             <img src="assets/couple.png" alt="Couple" class="hero-couple reveal" />
         </section>
 
-        <!-- EVENTS (Fixing Image sizes to show full portrait) -->
+        <!-- EVENTS -->
         <section class="section" id="events">
             <div class="bg-overlay"></div>
+            <img src="assets/flower2.png" class="static-flower tl" alt="" />
+            <img src="assets/flower2.png" class="static-flower br" alt="" />
+
             <div class="section-inner">
                 <p class="section-kicker reveal">Save the Dates</p>
                 <h2 class="section-title reveal">Wedding Events</h2>
                 <img src="assets/peacock-removebg-preview.png" class="peacock-divider reveal" alt="" />
                 
                 <div class="events-wrapper">
-                    <!-- Manda -->
                     <div class="event-box reveal">
                         <img src="assets/mandha.jpeg" alt="Manda" class="event-img" />
                         <div class="event-content">
                             <p class="event-name">MANDA</p>
                             <p class="event-date">WEDNESDAY, <strong>DEC 02</strong> 2026</p>
-                            <p class="event-time">12:00 p.m onwards</p>
-                            <div class="event-venue">Barot Village, Kaithal, Haryana</div>
+                            <p class="event-time">10:00 a.m onwards</p>
+                            <div class="event-venue">Barot Village Marriage Palace,<br/>Barot, Kaithal, Haryana</div>
                             <a href="https://maps.app.goo.gl/KSzgVodgMydCuB5Z8" target="_blank" class="btn-loc">Get Directions</a>
                         </div>
                     </div>
 
-                    <!-- Baraat -->
                     <div class="event-box reveal">
                         <img src="assets/baraat.jpeg" alt="Baraat" class="event-img" />
                         <div class="event-content">
                             <p class="event-name">BARAAT</p>
                             <p class="event-date">THURSDAY, <strong>DEC 03</strong> 2026</p>
                             <p class="event-time">3:00 p.m onwards</p>
-                            <div class="event-venue">Barot Will Depart From Barot Village, Kaithal<br/>Towards Israna, Panipat</div>
+                            <div class="event-venue">Departing from Barot Village<br/>Towards Israna, Panipat</div>
                             <a href="https://maps.app.goo.gl/KSzgVodgMydCuB5Z8" target="_blank" class="btn-loc">Get Directions</a>
                         </div>
                     </div>
@@ -293,9 +327,12 @@
             </div>
         </section>
 
-        <!-- VENUE (Tall Portrait Image, No Crop, Overlay Button) -->
+        <!-- VENUE -->
         <section class="section" id="venue">
             <div class="bg-overlay"></div>
+            <img src="assets/flower1.png" class="static-flower bl" alt="" />
+            <img src="assets/flower1.png" class="static-flower tr" alt="" />
+
             <div class="section-inner">
                 <p class="section-kicker reveal">The Celebration</p>
                 <h2 class="section-title reveal">Vivah Sthal</h2>
@@ -310,6 +347,9 @@
         <!-- SCRATCH -->
         <section class="section" id="scratch-section">
             <div class="bg-overlay"></div>
+            <img src="assets/flower2.png" class="static-flower tr" alt="" />
+            <img src="assets/flower2.png" class="static-flower bl" alt="" />
+
             <div class="section-inner">
                 <p class="section-kicker reveal">A Special Date</p>
                 <h2 class="section-title reveal">Scratch to Reveal</h2>
@@ -328,6 +368,9 @@
         <!-- COUNTDOWN -->
         <section class="section" id="countdown">
             <div class="bg-overlay"></div>
+            <img src="assets/flower1.png" class="static-flower tl" alt="" />
+            <img src="assets/flower1.png" class="static-flower br" alt="" />
+
             <div class="section-inner">
                 <p class="section-kicker reveal">Counting down to the</p>
                 <h2 class="section-title reveal">Baraat</h2>
@@ -349,43 +392,38 @@
             </div>
         </section>
 
-        <!-- FAMILY (Family Name Slide-in from Left/Right based on text) -->
+        <!-- FAMILY -->
         <section class="section" id="family">
             <div class="bg-overlay"></div>
             
             <img src="assets/elephantleft-removebg-preview.png" class="family-elephant left" alt="" />
             <img src="assets/elephantright-removebg-preview.png" class="family-elephant right" alt="" />
+            <img src="assets/flower2.png" class="static-flower tl" alt="" />
+            <img src="assets/flower2.png" class="static-flower br" alt="" />
 
             <div class="section-inner">
                 <p class="section-kicker reveal">With Warm Regards & Blessings</p>
                 <h2 class="section-title reveal">Our Families</h2>
                 <img src="assets/peacock-removebg-preview.png" class="peacock-divider reveal" alt="" />
 
-                <div class="reveal" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; text-align: left; margin-bottom: 40px;">
-                    <!-- Male family slides from left -->
-                    <div class="slide-left-init" style="flex:1; min-width: 250px;">
-                        <h4 class="section-kicker" style="margin-bottom: 15px; text-align: center;">Sharma Family (Groom)</h4>
-                        <ul class="family-list">
-                            <li>Shri Maniram Sharma</li>
-                            <li>Shri Rupchand Sharma</li>
-                            <li>Shri Gopal Sharma</li>
-                            <li>Shri Jaipal Sharma</li>
-                            <li>Shri Ramdiya Sharma</li>
-                            <li>Shri Bramdutt Sharma</li>
-                            <li>Entre Sharma Family</li>
-                            <li>Relatives & Friends</li>
-                        </ul>
-                    </div>
-                    
-                    <!-- Business / Female side slides from right -->
-                    <div class="slide-right-init" style="flex:1; min-width: 250px;">
-                        <h4 class="section-kicker" style="margin-bottom: 15px; text-align: center;">With Best Compliments From</h4>
-                        <ul class="family-list">
-                            <li>Balaji Steel Industries (Rolling Mill)</li>
-                            <li>Rahul Steels</li>
-                            <li>Chennai</li>
-                        </ul>
-                    </div>
+                <ul class="family-list reveal">
+                    <li>Shri Maniram Sharma</li>
+                    <li>Shri Rupchand Sharma</li>
+                    <li>Shri Gopal Sharma</li>
+                    <li>Shri Jaipal Sharma</li>
+                    <li>Shri Ramdiya Sharma</li>
+                    <li>Shri Bramdutt Sharma</li>
+                    <li>Entre Sharma Family</li>
+                    <li>Relatives & Friends</li>
+                </ul>
+
+                <div class="reveal" style="margin-top: 40px;">
+                    <div class="section-kicker">Business Associates</div>
+                    <ul class="family-list" style="font-size: 1.1rem;">
+                        <li>Balaji Steel Industries (Rolling Mill)</li>
+                        <li>Rahul Steels</li>
+                        <li>Chennai</li>
+                    </ul>
                 </div>
 
                 <div class="rsvp-box reveal">
@@ -398,7 +436,7 @@
 
         <footer id="footer">
             <p class="footer-text">Blessings are the only gifts we pursue, our happiest day needs a hug from you, mark your calendars, set the date we can't wait to see you at the gate! We look forward to share this beautiful moment with you & your family.</p>
-            <p class="footer-brand">Sahil weds Mansi</p>
+            <p class="footer-brand">Sharma Family</p>
         </footer>
     </main>
 
@@ -417,22 +455,29 @@
         var video = document.getElementById('opening-video');
         var opening = document.getElementById('opening');
         var invite = document.getElementById('invite');
+        var tapOverlay = document.getElementById('tap-overlay');
         var ellieSound = document.getElementById('elephant-sound');
         var bgMusic = document.getElementById('bg-music');
         var musicBtn = document.getElementById('music-btn');
         
         var musicPlaying = false;
+        var started = false;
 
-        // 1. AUTO-PLAY VIDEO & AUDIO
-        setTimeout(function() {
+        // 1. TAP TO START (Bypasses all browser audio blocks)
+        tapOverlay.addEventListener('click', function() {
+            if (started) return;
+            started = true;
+
+            // Hide overlay & Play Video (Unmuted)
+            tapOverlay.classList.add('hidden');
             video.play();
-            
-            // Play elephant sound 3 times right as the video starts
+
+            // Play Elephant Sound 3 times
             ellieSound.volume = 0.8;
             ellieSound.play().catch(function() {});
             setTimeout(function() { ellieSound.currentTime = 0; ellieSound.play().catch(function() {}); }, 600);
             setTimeout(function() { ellieSound.currentTime = 0; ellieSound.play().catch(function() {}); }, 1200);
-        }, 100);
+        });
 
         // 2. WHEN VIDEO ENDS, START MUSIC & REVEAL SITE
         video.onended = function() {
@@ -440,7 +485,7 @@
             invite.classList.add('visible');
             document.body.style.overflow = '';
             
-            // Background music
+            // Start Background Music
             bgMusic.volume = 0.5;
             bgMusic.play().then(function() {
                 musicPlaying = true;
@@ -451,9 +496,10 @@
             // Trigger Animations
             startHeroAnimations();
             initScrollAnimations();
-            createFlowers();
+            createFallingFlowers();
         };
 
+        // Music Toggle
         musicBtn.addEventListener('click', function(e) {
             e.stopPropagation();
             if (musicPlaying) {
@@ -471,11 +517,8 @@
 
         // 3. HERO SLIDE-IN ANIMATIONS
         function startHeroAnimations() {
-            // Male side slides from Left
-            gsap.to("#groom-side", { x: 0, opacity: 1, duration: 1.5, ease: "power3.out", delay: 0.3 });
-            // Female side slides from Right
-            gsap.to("#bride-side", { x: 0, opacity: 1, duration: 1.5, ease: "power3.out", delay: 0.3 });
-            
+            gsap.from("#groom-side", { x: 150, opacity: 0, duration: 1.5, ease: "power3.out", delay: 0.3 });
+            gsap.from("#bride-side", { x: -150, opacity: 0, duration: 1.5, ease: "power3.out", delay: 0.3 });
             gsap.to('.reveal', { opacity: 1, y: 0, duration: 1, stagger: 0.15, ease: "power2.out" });
         }
 
@@ -488,33 +531,18 @@
                     scrollTrigger: { trigger: elem, start: "top 85%", toggleActions: "play none none reverse" }
                 });
             });
-
-            // Slide in family members from left and right on scroll
-            gsap.utils.toArray('.slide-left-init').forEach(function(elem) {
-                if (elem.closest('#hero')) return;
-                gsap.to(elem, {
-                    x: 0, opacity: 1, duration: 1.2, ease: "power3.out",
-                    scrollTrigger: { trigger: elem, start: "top 85%", toggleActions: "play none none reverse" }
-                });
-            });
-
-            gsap.utils.toArray('.slide-right-init').forEach(function(elem) {
-                if (elem.closest('#hero')) return;
-                gsap.to(elem, {
-                    x: 0, opacity: 1, duration: 1.2, ease: "power3.out",
-                    scrollTrigger: { trigger: elem, start: "top 85%", toggleActions: "play none none reverse" }
-                });
-            });
         }
 
-        // 5. FALLING FLOWERS (IMAGE BASED)
-        function createFlowers() {
+        // 5. FALLING FLOWERS (USING FALLING1, 2, 3)
+        function createFallingFlowers() {
             var container = document.getElementById('flower-container');
             var numFlowers = window.innerWidth < 500 ? 15 : 25;
+            var flowerImgs = ['assets/falling1.png', 'assets/falling2.png', 'assets/falling3.png'];
             
             for (var i = 0; i < numFlowers; i++) {
                 var img = document.createElement('img');
-                img.src = Math.random() > 0.5 ? 'assets/flower1.png' : 'assets/flower2.png';
+                // Pick a random falling flower
+                img.src = flowerImgs[Math.floor(Math.random() * flowerImgs.length)];
                 img.className = 'falling-flower';
                 
                 var size = 20 + Math.random() * 30;
