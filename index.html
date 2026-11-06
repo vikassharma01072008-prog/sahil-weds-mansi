@@ -6,16 +6,17 @@
     <meta name="theme-color" content="#2b060a" />
     <title>Sahil weds Mansi — Wedding Invitation</title>
     
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
     
-    <!-- GSAP -->
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 
     <style>
+        /* ============================================================
+           RESET & VARIABLES
+           ============================================================ */
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         :root {
@@ -61,7 +62,7 @@
         @keyframes wave { 0% { transform: scale(0.8); opacity: 0.8; } 100% { transform: scale(1.8); opacity: 0; } }
 
         /* ============================================================
-           OPENING VIDEO & ELEPHANTS
+           OPENING VIDEO
            ============================================================ */
         #opening {
             position: fixed; inset: 0; z-index: 1000;
@@ -79,26 +80,14 @@
         .video-elephant.right { right: -2%; }
 
         /* ============================================================
-           FLOWERS FALLING (IMAGE BASED)
+           SVG CANVAS FLOWERS
            ============================================================ */
-        .flower-container {
-            position: fixed; inset: 0; z-index: 99; pointer-events: none; overflow: hidden;
-        }
-        .flower-img {
-            position: absolute; top: -100px;
-            width: 40px; height: auto;
-            animation: fall linear infinite;
-            opacity: 0.7;
-        }
-        @keyframes fall {
-            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.8; }
-            90% { opacity: 0.8; }
-            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        #flower-canvas {
+            position: fixed; inset: 0; z-index: 99; pointer-events: none;
         }
 
         /* ============================================================
-           MAIN WEBSITE SECTIONS
+           MAIN SECTIONS
            ============================================================ */
         #invite { opacity: 0; position: relative; background-color: var(--maroon-deep); transition: opacity 1.2s ease; }
         #invite.visible { opacity: 1; }
@@ -114,9 +103,9 @@
         
         .peacock-divider { width: 140px; margin: 20px auto; display: block; opacity: 0.9; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5)); }
 
-        /* HERO (palace.jpeg visible) */
+        /* HERO */
         #hero { background: url('assets/palace.jpeg') center/cover fixed; }
-        #hero .bg-overlay { position: absolute; inset: 0; background: rgba(253, 251, 247, 0.3); z-index: 1; } /* Very light overlay */
+        #hero .bg-overlay { position: absolute; inset: 0; background: rgba(253, 251, 247, 0.3); z-index: 1; }
 
         .hero-para { font-size: 1.3rem; line-height: 1.6; color: var(--maroon-text); margin-bottom: 30px; font-style: italic; font-weight: 600; position: relative; z-index: 5;}
         .hero-couple-grid { display: flex; flex-direction: column; gap: 30px; margin-bottom: 40px; position: relative; z-index: 5;}
@@ -129,9 +118,9 @@
         .hero-weds-center { font-family: var(--font-script); font-size: clamp(3rem, 8vw, 4.5rem); color: var(--maroon-text); margin: 20px 0; text-align: center; }
         .hero-couple { position: relative; margin: 0 auto; width: 90%; max-width: 400px; z-index: 10; filter: drop-shadow(0 15px 30px rgba(0,0,0,0.5)); }
 
-        /* EVENTS (otherbg.jpeg visible) */
+        /* EVENTS */
         #events { background: url('assets/otherbg.jpeg') center/cover fixed; }
-        #events .bg-overlay { position: absolute; inset: 0; background: rgba(43, 6, 10, 0.5); z-index: 1; } /* Lighter overlay */
+        #events .bg-overlay { position: absolute; inset: 0; background: rgba(43, 6, 10, 0.5); z-index: 1; }
 
         .events-wrapper { display: grid; grid-template-columns: 1fr; gap: 40px; margin-top: 40px; position: relative; z-index: 5; }
         @media(min-width: 768px) { .events-wrapper { grid-template-columns: 1fr 1fr; } }
@@ -180,15 +169,18 @@
         .btn-cal { display: inline-flex; align-items: center; gap: 10px; margin-top: 30px; padding: 15px 30px; background: linear-gradient(135deg, var(--gold), #a37f2e); color: var(--maroon-deep); font-family: var(--font-heading); font-size: 0.85rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; border-radius: 99px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); transition: transform 0.3s ease; position: relative; z-index: 5; }
         .btn-cal:hover { transform: translateY(-3px); }
 
-        /* FAMILY */
+        /* FAMILY (One by One Formatting) */
         #family { background: url('assets/otherbg.jpeg') center/cover fixed; }
-        #family .bg-overlay { position: absolute; inset: 0; background: rgba(43, 6, 10, 0.85); z-index: 1; }
+        #family .bg-overlay { position: absolute; inset: 0; background: rgba(43, 6, 10, 0.9); z-index: 1; }
 
         .family-elephant { position: absolute; bottom: 0; width: 35vw; max-width: 250px; opacity: 0.15; z-index: 2; pointer-events: none; }
         .family-elephant.left { left: 0; }
         .family-elephant.right { right: 0; transform: scaleX(-1); }
 
-        .family-names { font-family: var(--font-body); font-size: 1.2rem; line-height: 2; color: #ffffff; position: relative; z-index: 5; }
+        /* Family List - One per line */
+        .family-list { list-style: none; padding: 0; margin: 0 auto 40px auto; max-width: 400px; position: relative; z-index: 5; }
+        .family-list li { font-family: var(--font-body); font-size: 1.2rem; line-height: 1.8; color: #ffffff; margin-bottom: 10px; border-bottom: 1px dotted rgba(196,154,69,0.3); padding-bottom: 5px; }
+        
         .rsvp-box { background-color: rgba(196, 154, 69, 0.1); border: 1px dashed var(--gold); border-radius: 12px; padding: 30px 20px; margin-top: 40px; position: relative; z-index: 5; }
         .rsvp-numbers { font-family: var(--font-body); font-size: 1.6rem; font-weight: 600; color: var(--gold-light); }
 
@@ -201,8 +193,8 @@
 </head>
 <body>
 
-    <!-- FLOWERS CONTAINER -->
-    <div class="flower-container" id="flower-container"></div>
+    <!-- SVG FLOWERS CANVAS -->
+    <canvas id="flower-canvas"></canvas>
 
     <!-- MUSIC BUTTON -->
     <div id="music-btn" aria-label="Toggle music">
@@ -214,6 +206,7 @@
 
     <!-- OPENING VIDEO -->
     <div id="opening">
+        <!-- Autoplay and Muted to ensure mobile browsers play it instantly -->
         <video id="opening-video" src="assets/opening.mp4" playsinline autoplay muted></video>
         
         <img src="assets/elephantleft-removebg-preview.png" class="video-elephant left" alt="" />
@@ -222,7 +215,8 @@
 
     <!-- MAIN WEBSITE -->
     <main id="invite">
-        <!-- HERO -->
+        
+        <!-- HERO (Palace BG) -->
         <section class="section" id="hero">
             <div class="bg-overlay"></div>
             <div class="section-inner">
@@ -247,7 +241,7 @@
             <img src="assets/couple.png" alt="Couple" class="hero-couple reveal" />
         </section>
 
-        <!-- EVENTS -->
+        <!-- EVENTS (otherbg.jpeg) -->
         <section class="section" id="events">
             <div class="bg-overlay"></div>
             <div class="section-inner">
@@ -337,7 +331,7 @@
             </div>
         </section>
 
-        <!-- FAMILY -->
+        <!-- FAMILY (Names One by One) -->
         <section class="section" id="family">
             <div class="bg-overlay"></div>
             
@@ -349,26 +343,24 @@
                 <h2 class="section-title reveal">Our Families</h2>
                 <img src="assets/peacock-removebg-preview.png" class="peacock-divider reveal" alt="" />
 
-                <div class="reveal">
-                    <div class="family-names">
-                        <span>Shri Maniram Sharma</span>
-                        <span>Shri Rupchand Sharma</span>
-                        <span>Shri Gopal Sharma</span>
-                        <span>Shri Jaipal Sharma</span>
-                        <span>Shri Ramdiya Sharma</span>
-                        <span>Shri Bramdutt Sharma</span>
-                        <span>Entre Sharma Family</span>
-                        <span>Relatives & Friends</span>
-                    </div>
-                </div>
+                <ul class="family-list reveal">
+                    <li>Shri Maniram Sharma</li>
+                    <li>Shri Rupchand Sharma</li>
+                    <li>Shri Gopal Sharma</li>
+                    <li>Shri Jaipal Sharma</li>
+                    <li>Shri Ramdiya Sharma</li>
+                    <li>Shri Bramdutt Sharma</li>
+                    <li>Entre Sharma Family</li>
+                    <li>Relatives & Friends</li>
+                </ul>
 
                 <div class="reveal" style="margin-top: 40px;">
                     <div class="section-kicker">Business Associates</div>
-                    <div class="family-names" style="font-size: 1.1rem;">
-                        <span>Balaji Steel Industries (Rolling Mill)</span>
-                        <span>Rahul Steels</span>
-                        <span>Chennai</span>
-                    </div>
+                    <ul class="family-list" style="font-size: 1.1rem;">
+                        <li>Balaji Steel Industries (Rolling Mill)</li>
+                        <li>Rahul Steels</li>
+                        <li>Chennai</li>
+                    </ul>
                 </div>
 
                 <div class="rsvp-box reveal">
@@ -397,6 +389,8 @@
         if (typeof gsap !== 'undefined') { gsap.registerPlugin(ScrollTrigger); }
 
         var WEDDING_DATE = new Date('2026-12-03T15:00:00+05:30');
+        var DPR = Math.min(window.devicePixelRatio || 1, 2);
+        
         var video = document.getElementById('opening-video');
         var opening = document.getElementById('opening');
         var invite = document.getElementById('invite');
@@ -406,23 +400,24 @@
         
         var musicPlaying = false;
 
-        // 1. AUTO-PLAY VIDEO & AUDIO LOGIC
+        // 1. AUTO-PLAY VIDEO & AUDIO (No user tap needed for video to start)
         setTimeout(function() {
-            // Play video immediately (it's muted initially)
             video.play();
             
-            // Play elephant sound 3 times
+            // Play elephant sound 3 times right as the video starts
             ellieSound.volume = 0.8;
             ellieSound.play().catch(function() {});
             setTimeout(function() { ellieSound.currentTime = 0; ellieSound.play().catch(function() {}); }, 600);
             setTimeout(function() { ellieSound.currentTime = 0; ellieSound.play().catch(function() {}); }, 1200);
         }, 100);
 
+        // 2. WHEN VIDEO ENDS, START MUSIC & REVEAL SITE
         video.onended = function() {
             opening.classList.add('opened');
             invite.classList.add('visible');
             document.body.style.overflow = '';
             
+            // Start Background Music
             bgMusic.volume = 0.5;
             bgMusic.play().then(function() {
                 musicPlaying = true;
@@ -430,11 +425,13 @@
                 musicBtn.classList.add('visible');
             }).catch(function(e) { console.log('Music blocked:', e); });
 
+            // Run Animations
             startHeroAnimations();
             initScrollAnimations();
-            createFlowers();
+            initFallingFlowers();
         };
 
+        // Music Toggle Button
         musicBtn.addEventListener('click', function(e) {
             e.stopPropagation();
             if (musicPlaying) {
@@ -450,14 +447,14 @@
 
         document.body.style.overflow = 'hidden';
 
-        // 2. HERO SLIDE-IN ANIMATIONS
+        // 3. HERO SLIDE-IN ANIMATIONS
         function startHeroAnimations() {
             gsap.from("#groom-side", { x: 150, opacity: 0, duration: 1.5, ease: "power3.out", delay: 0.3 });
             gsap.from("#bride-side", { x: -150, opacity: 0, duration: 1.5, ease: "power3.out", delay: 0.3 });
             gsap.to('.reveal', { opacity: 1, y: 0, duration: 1, stagger: 0.15, ease: "power2.out" });
         }
 
-        // 3. SCROLL REVEALS
+        // 4. SCROLL REVEALS
         function initScrollAnimations() {
             gsap.utils.toArray('.reveal').forEach(function(elem) {
                 if (elem.closest('#hero')) return; 
@@ -468,37 +465,73 @@
             });
         }
 
-        // 4. IMAGE-BASED FALLING FLOWERS
-        function createFlowers() {
-            var container = document.getElementById('flower-container');
-            var numFlowers = window.innerWidth < 500 ? 15 : 25;
-            
+        // 5. PROPER SVG MULTI-COLOR FLOWERS
+        function initFallingFlowers() {
+            var canvas = document.getElementById('flower-canvas');
+            if (!canvas) return;
+            var ctx = canvas.getContext('2d');
+            var W = window.innerWidth; var H = window.innerHeight;
+            canvas.width = W * DPR; canvas.height = H * DPR;
+            canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+            ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+
+            var colors = ['#c49a45', '#e8d09e', '#f3d4cf', '#e8b5ac', '#f0dfbe', '#a02639']; 
+            var flowers = [];
+            var numFlowers = window.innerWidth < 500 ? 25 : 45;
+
             for (var i = 0; i < numFlowers; i++) {
-                var img = document.createElement('img');
-                // Alternate between flower1 and flower2
-                img.src = Math.random() > 0.5 ? 'assets/flower1.png' : 'assets/flower2.png';
-                img.className = 'flower-img';
-                
-                // Randomize size, position, speed, and delay
-                var size = 20 + Math.random() * 30; // 20px to 50px
-                var left = Math.random() * 100; // 0% to 100%
-                var duration = 8 + Math.random() * 8; // 8s to 16s
-                var delay = Math.random() * -15; // Start immediately but staggered
-                
-                img.style.width = size + 'px';
-                img.style.left = left + '%';
-                img.style.animationDuration = duration + 's';
-                img.style.animationDelay = delay + 's';
-                
-                container.appendChild(img);
+                flowers.push({
+                    x: Math.random() * W, y: Math.random() * -H,
+                    size: 12 + Math.random() * 15,
+                    speedY: 0.6 + Math.random() * 1.5,
+                    speedX: -0.6 + Math.random() * 1.2,
+                    rot: Math.random() * Math.PI * 2,
+                    rotSpeed: -0.02 + Math.random() * 0.04,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    opacity: 0.7 + Math.random() * 0.3
+                });
             }
+
+            function drawFlower(ctx, x, y, size, rot, color, opacity) {
+                ctx.save(); 
+                ctx.translate(x, y); 
+                ctx.rotate(rot);
+                ctx.globalAlpha = opacity; 
+                ctx.fillStyle = color;
+                
+                // 5-petal flower shape
+                for (var i = 0; i < 5; i++) {
+                    ctx.beginPath();
+                    ctx.ellipse(0, -size * 0.65, size * 0.4, size * 0.85, (i * Math.PI * 2) / 5, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                
+                // Center dot
+                ctx.fillStyle = '#fff4d8';
+                ctx.beginPath(); 
+                ctx.arc(0, 0, size * 0.25, 0, Math.PI * 2); 
+                ctx.fill();
+                
+                ctx.restore();
+            }
+
+            function loop() {
+                ctx.clearRect(0, 0, W, H);
+                for (var i = 0; i < numFlowers; i++) {
+                    var f = flowers[i];
+                    f.y += f.speedY; f.x += f.speedX; f.rot += f.rotSpeed;
+                    if (f.y > H + 30) { f.y = -30; f.x = Math.random() * W; }
+                    drawFlower(ctx, f.x, f.y, f.size, f.rot, f.color, f.opacity);
+                }
+                requestAnimationFrame(loop);
+            }
+            loop();
         }
 
-        // 5. SCRATCH TO REVEAL
+        // 6. SCRATCH TO REVEAL
         var scratchCanvas = document.getElementById('scratch-canvas');
         if (scratchCanvas) {
             var sctx = scratchCanvas.getContext('2d');
-            var DPR = Math.min(window.devicePixelRatio || 1, 2);
             var scratching = false, lastX = 0, lastY = 0, revealed = false;
 
             function setupScratch() {
@@ -549,7 +582,7 @@
             window.addEventListener('load', function() { setTimeout(setupScratch, 300); });
         }
 
-        // 6. COUNTDOWN
+        // 7. COUNTDOWN
         var elDays = document.getElementById('cd-days'), elHours = document.getElementById('cd-hours'), elMins = document.getElementById('cd-mins'), elSecs = document.getElementById('cd-secs'), prevSecs = -1;
         function pad(n) { return (n < 10 ? '0' : '') + n; }
         function tick() {
