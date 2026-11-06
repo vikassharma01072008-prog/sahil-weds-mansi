@@ -16,9 +16,6 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 
     <style>
-        /* ============================================================
-           RESET & VARIABLES
-           ============================================================ */
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         :root {
@@ -34,7 +31,8 @@
 
         html, body {
             width: 100%; overflow-x: hidden;
-            background-color: var(--maroon-deep); color: var(--ivory);
+            background-color: #000; /* Default black to match video */
+            color: var(--ivory);
             font-family: var(--font-body); -webkit-font-smoothing: antialiased;
         }
 
@@ -75,17 +73,19 @@
 
         #opening-video { width: 100%; height: 100%; object-fit: cover; }
 
+        /* Elephants placed lower and on the absolute edges */
         .video-elephant {
-            position: absolute; bottom: 10%; width: 40vw; max-width: 250px; z-index: 12;
+            position: absolute; bottom: 2%; width: 35vw; max-width: 220px; z-index: 12;
             pointer-events: none; filter: drop-shadow(0 15px 30px rgba(0,0,0,0.9));
         }
-        .video-elephant.left { left: 0; }
-        .video-elephant.right { right: 0; }
+        .video-elephant.left { left: -2%; }
+        .video-elephant.right { right: -2%; }
 
+        /* Transparent overlay so the video shows through, no red screen */
         .tap-overlay {
             position: absolute; inset: 0; z-index: 10;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            background: rgba(43, 6, 10, 0.4); backdrop-filter: blur(3px);
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.8) 100%);
             cursor: pointer; transition: opacity 0.6s ease;
         }
         .tap-overlay.hidden { opacity: 0; pointer-events: none; }
@@ -112,23 +112,22 @@
             align-items: center; z-index: 2; min-height: 100vh; justify-content: center; overflow: hidden;
         }
         .section-inner { position: relative; max-width: 900px; width: 100%; z-index: 5; text-align: center; }
-        .bg-overlay { position: absolute; inset: 0; background: rgba(43, 6, 10, 0.85); z-index: 1; }
 
         .section-kicker { font-family: var(--font-heading); font-size: 0.85rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold); margin-bottom: 15px; }
         .section-title { font-family: var(--font-script); font-size: clamp(3rem, 8vw, 5rem); color: var(--gold-light); line-height: 1.1; margin-bottom: 20px; text-shadow: 0 4px 15px rgba(0,0,0,0.8); }
         
-        /* Custom Divider with Peacock */
-        .peacock-divider { width: 160px; margin: 20px auto; display: block; opacity: 0.9; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5)); }
+        .peacock-divider { width: 140px; margin: 20px auto; display: block; opacity: 0.9; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5)); }
 
         /* ============================================================
-           HERO SECTION
+           HERO SECTION (Page 1) - Palace Background
            ============================================================ */
         #hero { background: url('assets/palace.jpeg') center/cover fixed; }
-        #hero .bg-overlay { background: rgba(253, 251, 247, 0.8); } /* Light overlay for maroon text */
+        /* Light overlay so the palace is visible but maroon text pops */
+        #hero .bg-overlay { position: absolute; inset: 0; background: rgba(253, 251, 247, 0.4); z-index: 1; }
 
-        .hero-para { font-size: 1.3rem; line-height: 1.6; color: var(--maroon-text); margin-bottom: 30px; font-style: italic; font-weight: 600; }
+        .hero-para { font-size: 1.3rem; line-height: 1.6; color: var(--maroon-text); margin-bottom: 30px; font-style: italic; font-weight: 600; position: relative; z-index: 5;}
         
-        .hero-couple-grid { display: flex; flex-direction: column; gap: 30px; margin-bottom: 40px; }
+        .hero-couple-grid { display: flex; flex-direction: column; gap: 30px; margin-bottom: 40px; position: relative; z-index: 5;}
         @media(min-width: 768px) { .hero-couple-grid { flex-direction: row; justify-content: space-between; align-items: center; } }
 
         .hero-side { flex: 1; text-align: center; }
@@ -139,17 +138,17 @@
         .hero-couple { position: relative; margin: 0 auto; width: 90%; max-width: 400px; z-index: 10; filter: drop-shadow(0 15px 30px rgba(0,0,0,0.5)); }
 
         /* ============================================================
-           EVENTS SECTION (FULL IMAGES - NO CUTOFF)
+           EVENTS SECTION (Page 2) - Otherbg
            ============================================================ */
         #events { background: url('assets/otherbg.jpeg') center/cover fixed; }
-        #events .bg-overlay { background: rgba(43, 6, 10, 0.9); }
+        #events .bg-overlay { position: absolute; inset: 0; background: rgba(43, 6, 10, 0.85); z-index: 1; }
 
-        .events-wrapper { display: grid; grid-template-columns: 1fr; gap: 40px; margin-top: 40px; }
+        .events-wrapper { display: grid; grid-template-columns: 1fr; gap: 40px; margin-top: 40px; position: relative; z-index: 5; }
         @media(min-width: 768px) { .events-wrapper { grid-template-columns: 1fr 1fr; } }
 
         .event-box { background-color: rgba(43, 6, 10, 0.95); border: 1px solid var(--gold); border-radius: 16px; overflow: hidden; box-shadow: 0 15px 40px rgba(0,0,0,0.8); text-align: center; }
         
-        /* The fix: object-fit contain, no fixed height */
+        /* No cutoffs for full images */
         .event-img { width: 100%; height: auto; display: block; border-bottom: 1px solid var(--gold); }
         
         .event-content { padding: 30px 20px; }
@@ -163,17 +162,16 @@
         .btn-loc:hover { background-color: var(--gold); color: var(--maroon-deep); }
 
         /* ============================================================
-           VENUE & SCRATCH SECTIONS
+           VENUE & SCRATCH
            ============================================================ */
         #venue { background: url('assets/palace.jpeg') center/cover fixed; }
-        #venue .bg-overlay { background: rgba(43, 6, 10, 0.9); }
+        #venue .bg-overlay { position: absolute; inset: 0; background: rgba(43, 6, 10, 0.9); z-index: 1; }
 
-        .venue-card { max-width: 450px; margin: 0 auto; border: 2px solid var(--gold); border-radius: 16px; overflow: hidden; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.8); }
+        .venue-card { max-width: 450px; margin: 0 auto; border: 2px solid var(--gold); border-radius: 16px; overflow: hidden; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.8); z-index: 5; }
         .venue-card img { width: 100%; display: block; }
         .venue-card .btn-loc { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background-color: rgba(43, 6, 10, 0.95); width: 85%; }
 
-        /* Scratch Card */
-        .scratch-container { position: relative; width: 100%; max-width: 450px; aspect-ratio: 2/1; margin: 40px auto; border-radius: 12px; overflow: hidden; border: 2px solid var(--gold); background: url('assets/scratchbg.jpeg') center/cover; box-shadow: 0 20px 50px rgba(0,0,0,0.8); }
+        .scratch-container { position: relative; width: 100%; max-width: 450px; aspect-ratio: 2/1; margin: 40px auto; border-radius: 12px; overflow: hidden; border: 2px solid var(--gold); background: url('assets/scratchbg.jpeg') center/cover; box-shadow: 0 20px 50px rgba(0,0,0,0.8); z-index: 5; }
         .scratch-text { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--navy); z-index: 1; background: rgba(43, 6, 10, 0.5); backdrop-filter: blur(3px); }
         .scratch-text h4 { font-family: var(--font-heading); font-size: 1rem; letter-spacing: 2px; color: var(--gold-light); text-shadow: 0 1px 2px #000; }
         .scratch-text p { font-family: var(--font-script); font-size: 3.5rem; color: #fff; text-shadow: 0 2px 10px #000; }
@@ -183,25 +181,24 @@
            COUNTDOWN
            ============================================================ */
         #countdown { background: url('assets/otherbg.jpeg') center/cover fixed; }
-        #countdown .bg-overlay { background: rgba(43, 6, 10, 0.9); }
+        #countdown .bg-overlay { position: absolute; inset: 0; background: rgba(43, 6, 10, 0.9); z-index: 1; }
 
-        .cd-wrap { background-color: rgba(43, 6, 10, 0.9); border: 1px solid var(--gold); border-radius: 20px; padding: 40px 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.8); margin-top: 30px; }
+        .cd-wrap { background-color: rgba(43, 6, 10, 0.9); border: 1px solid var(--gold); border-radius: 20px; padding: 40px 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.8); margin-top: 30px; position: relative; z-index: 5; }
         .cd-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; }
         .cd-box { background: rgba(196, 154, 69, 0.1); border: 1px solid rgba(196, 154, 69, 0.3); border-radius: 12px; padding: 20px 5px; text-align: center; }
         .cd-num { font-family: var(--font-heading); font-size: clamp(1.8rem, 6vw, 3rem); color: var(--gold-light); font-weight: 600; display: block; }
         .cd-lbl { font-family: var(--font-body); font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: #fff; opacity: 0.8; margin-top: 5px; display: block; }
         
-        .btn-cal { display: inline-flex; align-items: center; gap: 10px; margin-top: 30px; padding: 15px 30px; background: linear-gradient(135deg, var(--gold), #a37f2e); color: var(--maroon-deep); font-family: var(--font-heading); font-size: 0.85rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; border-radius: 99px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); transition: transform 0.3s ease; }
+        .btn-cal { display: inline-flex; align-items: center; gap: 10px; margin-top: 30px; padding: 15px 30px; background: linear-gradient(135deg, var(--gold), #a37f2e); color: var(--maroon-deep); font-family: var(--font-heading); font-size: 0.85rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; border-radius: 99px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); transition: transform 0.3s ease; position: relative; z-index: 5; }
         .btn-cal:hover { transform: translateY(-3px); }
 
         /* ============================================================
-           FAMILY SECTION (Last Page with Elephants)
+           FAMILY SECTION (Last Page) - Otherbg with Elephants
            ============================================================ */
         #family { background: url('assets/otherbg.jpeg') center/cover fixed; }
-        #family .bg-overlay { background: rgba(43, 6, 10, 0.95); }
+        #family .bg-overlay { position: absolute; inset: 0; background: rgba(43, 6, 10, 0.95); z-index: 1; }
 
-        /* Elephants for the bottom of the page */
-        .family-elephant { position: absolute; bottom: 0; width: 30vw; max-width: 200px; opacity: 0.15; z-index: 2; pointer-events: none; }
+        .family-elephant { position: absolute; bottom: 0; width: 35vw; max-width: 250px; opacity: 0.15; z-index: 2; pointer-events: none; }
         .family-elephant.left { left: 0; }
         .family-elephant.right { right: 0; transform: scaleX(-1); }
 
@@ -245,12 +242,12 @@
     <main id="invite">
         <canvas id="flower-canvas"></canvas>
 
-        <!-- HERO -->
+        <!-- HERO (Palace bg) -->
         <section class="section" id="hero">
             <div class="bg-overlay"></div>
             <div class="section-inner">
-                <img src="assets/ganesha.png" alt="" style="width: 140px; margin: 0 auto 15px;" class="reveal" />
-                <p class="section-kicker reveal" style="color:var(--maroon-text); font-weight:700;">विघ्न हरण मंगल करन श्री गणपति महाराज, प्रथम निमंत्रण आपको पूर्ण करियो काज ||</p>
+                <img src="assets/ganesha.png" alt="" style="width: 140px; margin: 0 auto 15px; position:relative; z-index:5;" class="reveal" />
+                <p class="section-kicker reveal" style="color:var(--maroon-text); font-weight:700; position:relative; z-index:5;">विघ्न हरण मंगल करन श्री गणपति महाराज, प्रथम निमंत्रण आपको पूर्ण करियो काज ||</p>
                 <p class="hero-para reveal">With divine blessings of family<br/>we cordially invite you for celebrating the wedding of</p>
                 
                 <div class="hero-couple-grid">
@@ -272,7 +269,7 @@
             <img src="assets/couple.png" alt="Couple" class="hero-couple reveal" />
         </section>
 
-        <!-- EVENTS -->
+        <!-- EVENTS (Otherbg) -->
         <section class="section" id="events">
             <div class="bg-overlay"></div>
             <div class="section-inner">
@@ -306,7 +303,7 @@
             </div>
         </section>
 
-        <!-- VENUE -->
+        <!-- VENUE (Palace faint) -->
         <section class="section" id="venue">
             <div class="bg-overlay"></div>
             <div class="section-inner">
@@ -320,7 +317,7 @@
             </div>
         </section>
 
-        <!-- SCRATCH TO REVEAL -->
+        <!-- SCRATCH -->
         <section class="section" id="scratch-section">
             <div class="bg-overlay"></div>
             <div class="section-inner">
@@ -362,11 +359,11 @@
             </div>
         </section>
 
-        <!-- FAMILY -->
+        <!-- FAMILY (Otherbg with Elephants) -->
         <section class="section" id="family">
             <div class="bg-overlay"></div>
             
-            <!-- Elephants in the background of the family page -->
+            <!-- Elephants placed in this section -->
             <img src="assets/elephantleft-removebg-preview.png" class="family-elephant left" alt="" />
             <img src="assets/elephantright-removebg-preview.png" class="family-elephant right" alt="" />
 
