@@ -1,596 +1,1392 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<meta name="theme-color" content="#0a1526" />
-<title>Sahil weds Mansi — Wedding Invitation</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-<style>
-/* ============================================================
-   SAHIL WEDS MANSI — ULTIMATE PREMIUM
-   ============================================================ */
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{width:100%;overflow-x:hidden;background:#0a1526;color:#f5ecd7;font-family:'Cormorant Garamond',Georgia,serif;-webkit-font-smoothing:antialiased}
-img{display:block;max-width:100%;height:auto}
-button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
-a{color:inherit;text-decoration:none}
-:root{
---ivory:#fdfbf7;
---maroon:#6b1a23;
---gold:#c49a45;
---gold-lt:#e8d09e;
---navy:#0a1526;
-}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#0a1526" />
+    <title>Sahil weds Mansi — Wedding Invitation</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <!-- GSAP for Animations -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 
-/* ============================================================
-   1. AUDIO (VINTAGE SPEAKER)
-   ============================================================ */
-#music-btn{position:fixed;bottom:24px;right:24px;z-index:9999;width:60px;height:60px;background:var(--navy);border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(0,0,0,.5),0 0 20px rgba(196,154,69,.4);cursor:pointer;transition:all .3s ease;opacity:0;pointer-events:none}
-#music-btn.visible{opacity:1;pointer-events:auto}
-#music-btn svg{width:32px;height:32px;fill:var(--gold-lt);transition:all .3s ease}
-#music-btn.playing svg{fill:var(--gold);filter:drop-shadow(0 0 8px rgba(196,154,69,.8))}
-.sound-wave{position:absolute;inset:-10px;border-radius:50%;border:2px solid var(--gold);opacity:0;pointer-events:none}
-#music-btn.playing .wave-1{animation:wave 2s infinite}
-#music-btn.playing .wave-2{animation:wave 2s infinite .5s}
-#music-btn.playing .wave-3{animation:wave 2s infinite 1s}
-@keyframes wave{0%{transform:scale(.8);opacity:.8}100%{transform:scale(1.8);opacity:0}}
+    <style>
+        /* ============================================================
+           RESET & GLOBAL VARIABLES
+           ============================================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-/* ============================================================
-   2. OPENING (4-FRAME CINEMATIC)
-   ============================================================ */
-#opening{position:fixed;inset:0;z-index:1000;background:var(--navy);overflow:hidden;display:flex;align-items:center;justify-content:center;perspective:2000px;transition:opacity 1s ease,visibility 1s ease}
-#opening.opened{opacity:0;visibility:hidden;pointer-events:none}
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+            background-color: #0a1526; /* Deep Navy */
+            color: #fdfbf7; /* Ivory */
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+            line-height: 1.5;
+        }
 
-.env-elephant{position:absolute;bottom:5%;width:45vw;max-width:250px;height:auto;z-index:15;pointer-events:none;filter:drop-shadow(0 10px 20px rgba(0,0,0,.8))}
-.env-elephant.left{left:-5%}
-.env-elephant.right{right:-5%}
+        img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
 
-.card-wrapper{position:relative;z-index:10;width:min(85vw, 400px);aspect-ratio: 9/16;perspective:1800px;transition:transform .5s ease}
-.card-wrapper.zoomed{transform:scale(1.1)}
+        button {
+            font: inherit;
+            color: inherit;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
 
-/* 4 Frames */
-.frame-layer{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;filter:drop-shadow(0 20px 40px rgba(0,0,0,.8))}
-.frame-layer.active{opacity:1}
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
 
-/* The 3D Split */
-.card-inner{position:absolute;inset:0;width:100%;height:100%;transform-style:preserve-3d;display:none}
-.card-half{position:absolute;top:0;bottom:0;width:50%;background:url('assets/card4.jpeg') center/cover no-repeat;background-size:200% 100%;box-shadow:inset 0 0 20px rgba(0,0,0,.5);backface-visibility:hidden}
-.card-half.left{left:0;transform-origin:left center;border-radius:12px 0 0 12px;background-position:left center}
-.card-half.right{right:0;transform-origin:right center;border-radius:0 12px 12px 0;background-position:right center}
+        :root {
+            --navy: #0a1526;
+            --gold: #c49a45;
+            --gold-light: #e8d09e;
+            --maroon: #6b1a23;
+            --ivory: #fdfbf7;
+            --font-heading: 'Cinzel', serif;
+            --font-script: 'Great Vibes', cursive;
+            --font-body: 'Cormorant Garamond', serif;
+        }
 
-/* Doors */
-.door-stage{position:absolute;inset:0;z-index:5;perspective:1600px;pointer-events:none}
-.door-panel{position:absolute;top:0;bottom:0;width:50%;background:url('assets/palace.jpeg') center/cover;background-color:var(--navy);transform-style:preserve-3d;box-shadow:inset 0 0 100px rgba(0,0,0,.9);opacity:0}
-.door-panel.left{left:0;transform-origin:left center}
-.door-panel.right{right:0;transform-origin:right center}
-#opening.show-doors .door-panel{opacity:1}
+        /* ============================================================
+           MUSIC BUTTON (VINTAGE TELEPHONE SPEAKER)
+           ============================================================ */
+        #music-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            width: 64px;
+            height: 64px;
+            background-color: var(--navy);
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 20px rgba(196,154,69,0.4);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
 
-.light-beam{position:absolute;top:0;bottom:0;left:50%;width:0;transform:translateX(-50%);background:radial-gradient(ellipse at 50% 50%,#fff 0%,var(--gold) 40%,transparent 80%);filter:blur(20px);opacity:0;z-index:4;pointer-events:none}
-#opening.split .light-beam{animation:beamGrow 2s ease-out forwards}
-@keyframes beamGrow{0%{width:0;opacity:0}30%{width:10%;opacity:.8}70%{width:60%;opacity:1}100%{width:150%;opacity:0}}
+        #music-btn.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
 
-.tap-hint{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);font-family:'Cinzel',serif;font-size:.8rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-lt);white-space:nowrap;z-index:20;padding:12px 24px;background:rgba(10,21,38,.85);border:1px solid var(--gold);border-radius:99px;animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:.7}50%{opacity:1}}
+        #music-btn svg {
+            width: 34px;
+            height: 34px;
+            fill: var(--gold-light);
+            transition: fill 0.3s ease;
+        }
 
-/* ============================================================
-   3. MAIN SCROLLING AREA
-   ============================================================ */
-#invite{opacity:0;position:relative;background:var(--navy);transition:opacity 1.2s ease}
-#invite.visible{opacity:1}
+        #music-btn.playing svg {
+            fill: var(--gold);
+            filter: drop-shadow(0 0 10px rgba(196,154,69,0.8));
+        }
 
-/* Flower Canvas Overlay */
-#flower-canvas{position:fixed;inset:0;z-index:99;pointer-events:none}
+        /* Pulsing Sound Waves */
+        .sound-wave {
+            position: absolute;
+            inset: -10px;
+            border-radius: 50%;
+            border: 2px solid var(--gold);
+            opacity: 0;
+            pointer-events: none;
+        }
 
-/* Section Base */
-.section{position:relative;padding:100px 24px;overflow:hidden;display:flex;flex-direction:column;align-items:center;z-index:2;min-height:100vh;justify-content:center}
-.section-inner{position:relative;max-width:800px;width:100%;z-index:5;text-align:center}
+        #music-btn.playing .wave-1 { animation: wave 2s infinite; }
+        #music-btn.playing .wave-2 { animation: wave 2s infinite 0.5s; }
+        #music-btn.playing .wave-3 { animation: wave 2s infinite 1s; }
 
-/* Custom Backgrounds for each section */
-#hero{background:url('assets/palace.jpeg') center/cover fixed}
-#hero::before{content:"";position:absolute;inset:0;background:rgba(10,21,38,.8)}
-#events{background:url('assets/otherbg.jpeg') center/cover fixed}
-#events::before{content:"";position:absolute;inset:0;background:rgba(10,21,38,.88)}
-#venue{background:url('assets/palace.jpeg') center/cover fixed}
-#venue::before{content:"";position:absolute;inset:0;background:rgba(10,21,38,.85)}
-#countdown{background:url('assets/otherbg.jpeg') center/cover fixed}
-#countdown::before{content:"";position:absolute;inset:0;background:rgba(10,21,38,.9)}
+        @keyframes wave {
+            0% { transform: scale(0.8); opacity: 0.8; }
+            100% { transform: scale(1.8); opacity: 0; }
+        }
 
-.section-kicker{font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
-.section-title{font-family:'Great Vibes',cursive;font-size:clamp(2.5rem, 8vw, 4.5rem);color:var(--gold-lt);line-height:1.1;margin-bottom:20px;text-shadow:0 2px 15px rgba(0,0,0,.8)}
-.divider{width:120px;height:1px;background:linear-gradient(to right, transparent, var(--gold), transparent);margin:20px auto;position:relative}
-.divider::after{content:"❖";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:var(--gold);font-size:1rem;background:#0d1b2e;padding:0 10px}
+        /* ============================================================
+           OPENING SEQUENCE (4-FRAME CINEMATIC)
+           ============================================================ */
+        #opening {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background-color: var(--navy);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 2000px;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
 
-/* HERO */
-.hero-names{font-family:'Cinzel',serif;font-size:clamp(1.8rem, 6vw, 2.8rem);color:#fff;font-weight:600;margin-top:20px;text-shadow:0 2px 10px rgba(0,0,0,.8)}
-.hero-weds{font-family:'Great Vibes',cursive;font-size:clamp(3rem, 8vw, 4rem);color:var(--gold);margin:15px 0;text-shadow:0 2px 10px rgba(0,0,0,.8)}
-.hero-para{font-size:1.3rem; line-height:1.6; color:var(--gold-lt); margin-bottom:30px; font-style:italic; text-shadow:0 2px 5px rgba(0,0,0,.8)}
-.hero-desc{font-size:1.1rem; color:#fff; margin-bottom:25px; line-height:1.6; text-shadow:0 1px 5px rgba(0,0,0,.8)}
-.hero-couple{position:relative;margin:40px auto 0;width:90%;max-width:500px;z-index:10;filter:drop-shadow(0 15px 30px rgba(0,0,0,.8))}
+        #opening.opened {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
 
-/* EVENTS */
-.events-wrapper{display:grid;grid-template-columns:1fr;gap:40px;margin-top:40px}
-@media(min-width:768px){.events-wrapper{grid-template-columns:1fr 1fr}}
-.event-box{background:rgba(10,21,38,.8);border:1px solid rgba(196,154,69,.5);border-radius:16px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.7);backdrop-filter:blur(10px)}
-.event-img{width:100%;height:300px;object-fit:cover;object-position:top;border-bottom:2px solid var(--gold)}
-.event-content{padding:30px 20px;text-align:center}
-.event-name{font-family:'Cinzel',serif;font-size:1.3rem;letter-spacing:2px;color:var(--gold);margin-bottom:15px}
-.event-date{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:#fff;line-height:1.2;margin-bottom:8px}
-.event-date strong{color:var(--gold-lt);font-size:2.4rem}
-.event-time{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:#ccc;margin-bottom:20px;font-style:italic}
-.event-venue{font-family:'Cormorant Garamond',serif;font-size:1.1rem;line-height:1.6;color:#fff;border-top:1px dashed rgba(196,154,69,.4);padding-top:20px;margin-top:10px}
-.btn-loc{display:inline-block;margin-top:25px;padding:14px 30px;background:var(--maroon);color:#fff;font-family:'Cinzel',serif;font-size:.8rem;letter-spacing:2px;border-radius:99px;border:1px solid var(--gold);transition:all .3s}
-.btn-loc:hover{background:var(--gold);color:var(--navy)}
+        /* Elephants (Always visible on sides) */
+        .env-elephant {
+            position: absolute;
+            bottom: 5%;
+            width: 45vw;
+            max-width: 280px;
+            height: auto;
+            z-index: 15;
+            pointer-events: none;
+            filter: drop-shadow(0 15px 30px rgba(0,0,0,0.8));
+        }
 
-/* VENUE & SCRATCH */
-.venue-card{max-width:450px;margin:0 auto;border:2px solid var(--gold);border-radius:16px;overflow:hidden;position:relative;box-shadow:0 20px 50px rgba(0,0,0,.8)}
-.venue-card img{width:100%}
-.venue-card .btn-loc{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(10,21,38,.9);width:85%}
+        .env-elephant.left { left: -5%; }
+        .env-elephant.right { right: -5%; }
 
-.scratch-container{position:relative;width:100%;max-width:450px;aspect-ratio:2/1;margin:40px auto;border-radius:12px;overflow:hidden;border:2px solid var(--gold);background:url('assets/scratchbg.jpeg') center/cover;box-shadow:0 20px 50px rgba(0,0,0,.8)}
-.scratch-text{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--navy);z-index:1;background:rgba(10,21,38,.5);backdrop-filter:blur(3px)}
-.scratch-text h4{font-family:'Cinzel',serif;font-size:1rem;letter-spacing:2px;color:var(--gold-lt); text-shadow:0 1px 2px #000}
-.scratch-text p{font-family:'Great Vibes',cursive;font-size:3.5rem;color:#fff; text-shadow:0 2px 10px #000}
-#scratch-canvas{position:absolute;inset:0;z-index:2;cursor:crosshair;touch-action:none}
+        /* Card Wrapper */
+        .card-wrapper {
+            position: relative;
+            z-index: 10;
+            width: min(85vw, 420px);
+            aspect-ratio: 9 / 16;
+            perspective: 1800px;
+            transition: transform 0.5s ease;
+            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.9));
+        }
 
-/* COUNTDOWN */
-.cd-wrap{background:rgba(10,21,38,.8);border:2px solid var(--gold);border-radius:20px;padding:50px 20px;box-shadow:0 30px 60px rgba(0,0,0,.8);backdrop-filter:blur(10px);position:relative;overflow:hidden;margin-top:30px}
-.cd-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
-.cd-num{font-family:'Cinzel',serif;font-size:clamp(2rem,7vw,3.5rem);color:var(--gold-lt);font-weight:600;text-shadow:0 2px 10px rgba(0,0,0,.5)}
-.cd-lbl{font-family:'Cormorant Garamond',serif;font-size:.8rem;letter-spacing:2px;text-transform:uppercase;color:#fff;opacity:.8}
+        .card-wrapper.zoomed {
+            transform: scale(1.1);
+        }
 
-/* FAMILY */
-.rsvp-box{background:rgba(196,154,69,.15);border:1px dashed var(--gold);border-radius:12px;padding:40px 20px;margin-top:40px;box-shadow:0 10px 30px rgba(0,0,0,.4)}
-.family-names{font-family:'Cormorant Garamond',serif;font-size:1.2rem;line-height:2;color:#fff;text-shadow:0 1px 3px #000}
-.rsvp-numbers{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;color:var(--gold-lt)}
+        /* 4 Frames for Opening */
+        .frame-layer {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.8s ease;
+        }
 
-#footer{background:#050a14;padding:50px 20px;text-align:center;border-top:1px solid rgba(196,154,69,.2);position:relative;z-index:5}
-.footer-text{font-family:'Cormorant Garamond',serif;font-size:1.1rem; font-style:italic; line-height:1.6; color:var(--gold-lt); opacity:.9; max-width:600px; margin:0 auto}
-.footer-brand{font-family:'Great Vibes',cursive;font-size:2.5rem;color:#fff;margin-top:20px}
+        .frame-layer.active {
+            opacity: 1;
+        }
 
-.reveal{opacity:0;transform:translateY(40px)}
-</style>
+        /* The 3D Split (The actual card opening) */
+        .card-inner {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            display: none; /* Hidden until split */
+        }
+
+        .card-half {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 50%;
+            background-image: url('assets/card4.jpeg');
+            background-size: 200% 100%;
+            background-repeat: no-repeat;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.6);
+            backface-visibility: hidden;
+        }
+
+        .card-half.left {
+            left: 0;
+            transform-origin: left center;
+            border-radius: 12px 0 0 12px;
+            background-position: left center;
+        }
+
+        .card-half.right {
+            right: 0;
+            transform-origin: right center;
+            border-radius: 0 12px 12px 0;
+            background-position: right center;
+        }
+
+        /* Palace Doors Behind Card */
+        .door-stage {
+            position: absolute;
+            inset: 0;
+            z-index: 5;
+            perspective: 1600px;
+            pointer-events: none;
+        }
+
+        .door-panel {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 50%;
+            background-image: url('assets/palace.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-color: var(--navy);
+            transform-style: preserve-3d;
+            box-shadow: inset 0 0 100px rgba(0,0,0,0.9);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .door-panel.left { left: 0; transform-origin: left center; }
+        .door-panel.right { right: 0; transform-origin: right center; }
+
+        #opening.show-doors .door-panel { opacity: 1; }
+
+        /* Light Beam */
+        .light-beam {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            transform: translateX(-50%);
+            background: radial-gradient(ellipse at 50% 50%, #ffffff 0%, var(--gold) 40%, transparent 80%);
+            filter: blur(25px);
+            opacity: 0;
+            z-index: 4;
+            pointer-events: none;
+        }
+
+        #opening.split .light-beam {
+            animation: beamGrow 2s ease-out forwards;
+        }
+
+        @keyframes beamGrow {
+            0% { width: 0; opacity: 0; }
+            30% { width: 10%; opacity: 0.8; }
+            70% { width: 60%; opacity: 1; }
+            100% { width: 150%; opacity: 0; }
+        }
+
+        /* Tap Hint */
+        .tap-hint {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: var(--font-heading);
+            font-size: 0.85rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--gold-light);
+            white-space: nowrap;
+            z-index: 20;
+            padding: 14px 30px;
+            background: rgba(10,21,38,0.9);
+            border: 1px solid var(--gold);
+            border-radius: 99px;
+            animation: pulse 2s infinite;
+            opacity: 0;
+            transition: opacity 1s;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        /* ============================================================
+           MAIN WEBSITE & SECTIONS
+           ============================================================ */
+        #invite {
+            opacity: 0;
+            position: relative;
+            background-color: var(--navy);
+            transition: opacity 1.2s ease;
+        }
+
+        #invite.visible { opacity: 1; }
+
+        /* Falling Flowers Canvas Overlay */
+        #flower-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 99;
+            pointer-events: none;
+        }
+
+        /* Section Base */
+        .section {
+            position: relative;
+            padding: 100px 24px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 2;
+            min-height: 100vh;
+            justify-content: center;
+        }
+
+        .section-inner {
+            position: relative;
+            max-width: 800px;
+            width: 100%;
+            z-index: 5;
+            text-align: center;
+        }
+
+        /* Custom Backgrounds */
+        #hero {
+            background-image: url('assets/palace.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        #hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(10, 21, 38, 0.8);
+            z-index: 1;
+        }
+
+        #events {
+            background-image: url('assets/otherbg.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        #events::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(10, 21, 38, 0.9);
+            z-index: 1;
+        }
+
+        #venue {
+            background-image: url('assets/palace.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        #venue::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(10, 21, 38, 0.85);
+            z-index: 1;
+        }
+
+        #countdown {
+            background-image: url('assets/otherbg.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        #countdown::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(10, 21, 38, 0.95);
+            z-index: 1;
+        }
+
+        /* Typography */
+        .section-kicker {
+            font-family: var(--font-heading);
+            font-size: 0.85rem;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 15px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+        }
+
+        .section-title {
+            font-family: var(--font-script);
+            font-size: clamp(3rem, 8vw, 5rem);
+            color: var(--gold-light);
+            line-height: 1.1;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.8);
+        }
+
+        .divider {
+            width: 140px;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--gold), transparent);
+            margin: 25px auto;
+            position: relative;
+        }
+
+        .divider::after {
+            content: "❖";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--gold);
+            font-size: 1.2rem;
+            background: #0d1b2e; /* Matches overlay */
+            padding: 0 10px;
+        }
+
+        /* ============================================================
+           HERO SECTION
+           ============================================================ */
+        .hero-names {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 6vw, 3rem);
+            color: #ffffff;
+            font-weight: 600;
+            margin-top: 20px;
+            text-shadow: 0 3px 15px rgba(0,0,0,0.9);
+        }
+
+        .hero-weds {
+            font-family: var(--font-script);
+            font-size: clamp(3rem, 8vw, 4.5rem);
+            color: var(--gold);
+            margin: 20px 0;
+            text-shadow: 0 3px 15px rgba(0,0,0,0.9);
+        }
+
+        .hero-para {
+            font-size: 1.4rem;
+            line-height: 1.6;
+            color: var(--gold-light);
+            margin-bottom: 30px;
+            font-style: italic;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.9);
+        }
+
+        .hero-desc {
+            font-size: 1.15rem;
+            color: #ffffff;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.9);
+        }
+
+        .hero-couple {
+            position: relative;
+            margin: 50px auto 0;
+            width: 90%;
+            max-width: 450px;
+            z-index: 10;
+            filter: drop-shadow(0 15px 30px rgba(0,0,0,0.9));
+        }
+
+        /* ============================================================
+           EVENTS SECTION
+           ============================================================ */
+        .events-wrapper {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 50px;
+            margin-top: 50px;
+        }
+
+        @media(min-width: 768px) {
+            .events-wrapper {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .event-box {
+            background-color: rgba(10, 21, 38, 0.85);
+            border: 1px solid rgba(196, 154, 69, 0.5);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .event-box:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Full Image Layout */
+        .event-img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            object-position: top;
+            border-bottom: 2px solid var(--gold);
+        }
+
+        .event-content {
+            padding: 40px 25px;
+            text-align: center;
+        }
+
+        .event-name {
+            font-family: var(--font-heading);
+            font-size: 1.4rem;
+            letter-spacing: 2px;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        .event-date {
+            font-family: var(--font-body);
+            font-size: 2rem;
+            color: #ffffff;
+            line-height: 1.2;
+            margin-bottom: 10px;
+        }
+
+        .event-date strong {
+            color: var(--gold-light);
+            font-size: 2.6rem;
+        }
+
+        .event-time {
+            font-family: var(--font-body);
+            font-size: 1.3rem;
+            color: #cccccc;
+            margin-bottom: 25px;
+            font-style: italic;
+        }
+
+        .event-venue {
+            font-family: var(--font-body);
+            font-size: 1.15rem;
+            line-height: 1.6;
+            color: #ffffff;
+            border-top: 1px dashed rgba(196, 154, 69, 0.4);
+            padding-top: 20px;
+            margin-top: 10px;
+        }
+
+        .btn-loc {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 15px 35px;
+            background-color: var(--maroon);
+            color: #ffffff;
+            font-family: var(--font-heading);
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-radius: 99px;
+            border: 1px solid var(--gold);
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+        }
+
+        .btn-loc:hover {
+            background-color: var(--gold);
+            color: var(--navy);
+        }
+
+        /* ============================================================
+           VENUE SECTION
+           ============================================================ */
+        .venue-card {
+            max-width: 450px;
+            margin: 0 auto;
+            border: 2px solid var(--gold);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+        }
+
+        .venue-card img {
+            width: 100%;
+            display: block;
+        }
+
+        .venue-card .btn-loc {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(10, 21, 38, 0.9);
+            width: 85%;
+        }
+
+        /* ============================================================
+           SCRATCH & COUNTDOWN
+           ============================================================ */
+        .scratch-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            aspect-ratio: 2 / 1;
+            margin: 50px auto;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 2px solid var(--gold);
+            background-image: url('assets/scratchbg.jpeg');
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.9);
+        }
+
+        .scratch-text {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+            background-color: rgba(10, 21, 38, 0.5);
+            backdrop-filter: blur(3px);
+        }
+
+        .scratch-text h4 {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            letter-spacing: 3px;
+            color: var(--gold-light);
+            text-shadow: 0 2px 4px #000;
+        }
+
+        .scratch-text p {
+            font-family: var(--font-script);
+            font-size: 3.5rem;
+            color: #ffffff;
+            text-shadow: 0 2px 10px #000;
+        }
+
+        #scratch-canvas {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            cursor: crosshair;
+            touch-action: none;
+        }
+
+        /* Countdown Premium Box */
+        .cd-wrap {
+            background-color: rgba(10, 21, 38, 0.8);
+            border: 2px solid var(--gold);
+            border-radius: 24px;
+            padding: 60px 20px;
+            box-shadow: 0 30px 70px rgba(0,0,0,0.9);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            margin-top: 40px;
+        }
+
+        .cd-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .cd-num {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 7vw, 3.5rem);
+            color: var(--gold-light);
+            font-weight: 600;
+            text-shadow: 0 2px 15px rgba(0,0,0,0.8);
+        }
+
+        .cd-lbl {
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #ffffff;
+            opacity: 0.8;
+        }
+
+        /* ============================================================
+           FAMILY & RSVP
+           ============================================================ */
+        .family-names {
+            font-family: var(--font-body);
+            font-size: 1.25rem;
+            line-height: 2;
+            color: #ffffff;
+            text-shadow: 0 2px 5px #000;
+        }
+
+        .rsvp-box {
+            background-color: rgba(196, 154, 69, 0.15);
+            border: 1px dashed var(--gold);
+            border-radius: 16px;
+            padding: 40px 20px;
+            margin-top: 50px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+        }
+
+        .rsvp-numbers {
+            font-family: var(--font-body);
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--gold-light);
+        }
+
+        /* ============================================================
+           FOOTER
+           ============================================================ */
+        #footer {
+            background-color: #050a14;
+            padding: 60px 20px;
+            text-align: center;
+            border-top: 1px solid rgba(196, 154, 69, 0.2);
+            position: relative;
+            z-index: 5;
+        }
+
+        .footer-text {
+            font-family: var(--font-body);
+            font-size: 1.15rem;
+            font-style: italic;
+            line-height: 1.7;
+            color: var(--gold-light);
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .footer-brand {
+            font-family: var(--font-script);
+            font-size: 2.5rem;
+            color: #ffffff;
+            margin-top: 30px;
+        }
+
+        /* Scroll Animation Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+        }
+    </style>
 </head>
 <body>
 
-<div id="music-btn" aria-label="Toggle music">
-  <div class="sound-wave wave-1"></div>
-  <div class="sound-wave wave-2"></div>
-  <div class="sound-wave wave-3"></div>
-  <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9v2H2v2h3v2c0 3.87 3.13 7 7 7s7-3.13 7-7v-2h3v-2h-3V9c0-3.87-3.13-7-7-7zm0 16c-2.76 0-5-2.24-5-5v-4c0-2.76 2.24-5 5-5s5 2.24 5 5v4c0 2.76-2.24 5-5 5z"/><path d="M12 6c-1.66 0-3 1.34-3 3v4c0 1.66 1.34 3 3 3s3-1.34 3-3V9c0-1.66-1.34-3-3-3z"/></svg>
-</div>
-
-<div id="opening">
-  <div class="door-stage">
-    <div class="door-panel left"></div>
-    <div class="door-panel right"></div>
-    <div class="light-beam"></div>
-  </div>
-
-  <img src="assets/elephantleft-removebg-preview.png" class="env-elephant left" id="ellie-left" alt="" />
-  <img src="assets/elephantright-removebg-preview.png" class="env-elephant right" id="ellie-right" alt="" />
-
-  <div class="card-wrapper" id="opening-card">
-    <!-- The 4 Frames -->
-    <img src="assets/card1.jpeg" class="frame-layer active" id="f1" alt="Frame 1" />
-    <img src="assets/card2.jpeg" class="frame-layer" id="f2" alt="Frame 2" />
-    <img src="assets/card3.jpeg" class="frame-layer" id="f3" alt="Frame 3" />
-    <img src="assets/card4.jpeg" class="frame-layer" id="f4" alt="Frame 4" />
-    
-    <!-- 3D Split Halves -->
-    <div class="card-inner" id="card-split">
-      <div class="card-half left"></div>
-      <div class="card-half right"></div>
+    <!-- Music Toggle -->
+    <div id="music-btn" aria-label="Toggle music">
+        <div class="sound-wave wave-1"></div>
+        <div class="sound-wave wave-2"></div>
+        <div class="sound-wave wave-3"></div>
+        <svg viewBox="0 0 24 24">
+            <path d="M12 2C8.13 2 5 5.13 5 9v2H2v2h3v2c0 3.87 3.13 7 7 7s7-3.13 7-7v-2h3v-2h-3V9c0-3.87-3.13-7-7-7zm0 16c-2.76 0-5-2.24-5-5v-4c0-2.76 2.24-5 5-5s5 2.24 5 5v4c0 2.76-2.24 5-5 5z"/>
+            <path d="M12 6c-1.66 0-3 1.34-3 3v4c0 1.66 1.34 3 3 3s3-1.34 3-3V9c0-1.66-1.34-3-3-3z"/>
+        </svg>
     </div>
-  </div>
-  
-  <div class="tap-hint" id="tap-hint" style="opacity:0; transition:opacity 1s">Tap to Open</div>
-</div>
 
-<main id="invite">
-  <canvas id="flower-canvas"></canvas>
-
-  <section class="section" id="hero">
-    <div class="section-inner">
-      <img src="assets/peacock-removebg-preview.png" alt="" style="width:180px; margin:0 auto 20px; filter:drop-shadow(0 5px 10px rgba(0,0,0,.5))" class="reveal" />
-      <p class="section-kicker reveal">विघ्न हरण मंगल करन श्री गणपति महाराज, प्रथम निमंत्रण आपको पूर्ण करियो काज ||</p>
-      <p class="hero-para reveal">With divine blessings of family<br/>we cordially invite you for celebrating the wedding of</p>
-      <h2 class="hero-names reveal">Sahil Sharma</h2>
-      <p class="hero-desc reveal">Grandson of Late Smt Anguri Devi W/o Late Shri Maduram Sharma,<br/>Smt Savitri Devi W/o Shri Satyawan Sharma,<br/>Barot, Kaithal, Haryana</p>
-      <div class="hero-weds reveal">weds</div>
-      <h2 class="hero-names reveal">Mansi Sharma</h2>
-      <p class="hero-desc reveal">Grand Daughter of Late Smt Kamala Devi W/o Shri Parashram Ji<br/>Smt Anita Sharma W/o Shri Rajesh Sharma,<br/>Ahmadpur Majra, Gohana, Sonipat, Haryana</p>
-    </div>
-    <img src="assets/couple.png" alt="Couple" class="hero-couple reveal" />
-  </section>
-
-  <section class="section" id="events">
-    <div class="section-inner">
-      <p class="section-kicker reveal">Save the Dates</p>
-      <h2 class="section-title reveal">Wedding Events</h2>
-      <div class="divider reveal"></div>
-      <div class="events-wrapper">
-        <div class="event-box reveal">
-          <img src="assets/mandha.jpeg" alt="Manda" class="event-img" />
-          <div class="event-content">
-            <p class="event-name">MANDA</p>
-            <p class="event-date">WEDNESDAY, <strong>DEC 02</strong> 2026</p>
-            <p class="event-time">10:00 a.m onwards</p>
-            <div class="event-venue">Barot Village Marriage Palace,<br/>Barot, Kaithal, Haryana</div>
-            <a href="https://maps.app.goo.gl/KSzgVodgMydCuB5Z8" target="_blank" class="btn-loc">Get Directions</a>
-          </div>
+    <!-- OPENING SEQUENCE -->
+    <div id="opening">
+        <div class="door-stage">
+            <div class="door-panel left"></div>
+            <div class="door-panel right"></div>
+            <div class="light-beam"></div>
         </div>
-        <div class="event-box reveal">
-          <img src="assets/baraat.jpeg" alt="Baraat" class="event-img" />
-          <div class="event-content">
-            <p class="event-name">BARAAT</p>
-            <p class="event-date">THURSDAY, <strong>DEC 03</strong> 2026</p>
-            <p class="event-time">3:00 p.m onwards</p>
-            <div class="event-venue">Wedstation by 5 Senses Hotels,<br/>Israna Panipat, Haryana</div>
-            <a href="https://maps.app.goo.gl/ZUoLPJZBLwBQ2sjL8" target="_blank" class="btn-loc">Get Directions</a>
-          </div>
+
+        <!-- Elephants -->
+        <img src="assets/elephantleft-removebg-preview.png" class="env-elephant left" id="ellie-left" alt="" />
+        <img src="assets/elephantright-removebg-preview.png" class="env-elephant right" id="ellie-right" alt="" />
+
+        <div class="card-wrapper" id="opening-card">
+            <!-- The 4 Frames -->
+            <img src="assets/card1.jpeg" class="frame-layer active" id="f1" alt="Frame 1" />
+            <img src="assets/card2.jpeg" class="frame-layer" id="f2" alt="Frame 2" />
+            <img src="assets/card3.jpeg" class="frame-layer" id="f3" alt="Frame 3" />
+            <img src="assets/card4.jpeg" class="frame-layer" id="f4" alt="Frame 4" />
+            
+            <!-- The Split -->
+            <div class="card-inner" id="card-split">
+                <div class="card-half left"></div>
+                <div class="card-half right"></div>
+            </div>
         </div>
-      </div>
+        
+        <div class="tap-hint" id="tap-hint">Tap to Open</div>
     </div>
-  </section>
 
-  <section class="section" id="venue">
-    <div class="section-inner">
-      <p class="section-kicker reveal">The Celebration</p>
-      <h2 class="section-title reveal">Vivah Sthal</h2>
-      <div class="divider reveal"></div>
-      <div class="venue-card reveal">
-        <img src="assets/venue.jpeg" alt="Venue" />
-        <a href="https://maps.app.goo.gl/ZUoLPJZBLwBQ2sjL8" target="_blank" class="btn-loc">Get Directions</a>
-      </div>
-    </div>
-  </section>
+    <!-- MAIN WEBSITE -->
+    <main id="invite">
+        <canvas id="flower-canvas"></canvas>
 
-  <section class="section" id="scratch-section">
-    <div class="section-inner">
-      <p class="section-kicker reveal">A Special Date</p>
-      <h2 class="section-title reveal">Scratch to Reveal</h2>
-      <div class="divider reveal"></div>
-      <div class="scratch-container reveal">
-        <div class="scratch-text">
-          <h4>BARAAT DATE</h4>
-          <p>03 Dec 2026</p>
-        </div>
-        <canvas id="scratch-canvas"></canvas>
-      </div>
-    </div>
-  </section>
+        <!-- HERO -->
+        <section class="section" id="hero">
+            <div class="section-inner">
+                <img src="assets/peacock-removebg-preview.png" alt="" style="width: 200px; margin: 0 auto 20px; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.8));" class="reveal" />
+                <p class="section-kicker reveal">विघ्न हरण मंगल करन श्री गणपति महाराज, प्रथम निमंत्रण आपको पूर्ण करियो काज ||</p>
+                <p class="hero-para reveal">With divine blessings of family<br/>we cordially invite you for celebrating the wedding of</p>
+                
+                <h2 class="hero-names reveal">Sahil Sharma</h2>
+                <p class="hero-desc reveal">Grandson of Late Smt Anguri Devi W/o Late Shri Maduram Sharma,<br/>Smt Savitri Devi W/o Shri Satyawan Sharma,<br/>Barot, Kaithal, Haryana</p>
+                
+                <div class="hero-weds reveal">weds</div>
+                
+                <h2 class="hero-names reveal">Mansi Sharma</h2>
+                <p class="hero-desc reveal">Grand Daughter of Late Smt Kamala Devi W/o Shri Parashram Ji<br/>Smt Anita Sharma W/o Shri Rajesh Sharma,<br/>Ahmadpur Majra, Gohana, Sonipat, Haryana</p>
+            </div>
+            <img src="assets/couple.png" alt="Couple" class="hero-couple reveal" />
+        </section>
 
-  <section class="section" id="countdown">
-    <div class="section-inner">
-      <p class="section-kicker" style="color:var(--gold)">Counting down to the</p>
-      <h2 class="section-title">Baraat</h2>
-      <div class="cd-wrap reveal">
-        <div class="cd-grid">
-          <div class="cd-box"><span class="cd-num" id="cd-days">00</span><span class="cd-lbl">Days</span></div>
-          <div class="cd-box"><span class="cd-num" id="cd-hours">00</span><span class="cd-lbl">Hours</span></div>
-          <div class="cd-box"><span class="cd-num" id="cd-mins">00</span><span class="cd-lbl">Mins</span></div>
-          <div class="cd-box"><span class="cd-num" id="cd-secs">00</span><span class="cd-lbl">Secs</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
+        <!-- EVENTS -->
+        <section class="section" id="events">
+            <div class="section-inner">
+                <p class="section-kicker reveal">Save the Dates</p>
+                <h2 class="section-title reveal">Wedding Events</h2>
+                <div class="divider reveal"></div>
+                
+                <div class="events-wrapper">
+                    <!-- Manda -->
+                    <div class="event-box reveal">
+                        <img src="assets/mandha.jpeg" alt="Manda" class="event-img" />
+                        <div class="event-content">
+                            <p class="event-name">MANDA</p>
+                            <p class="event-date">WEDNESDAY, <strong>DEC 02</strong> 2026</p>
+                            <p class="event-time">10:00 a.m onwards</p>
+                            <div class="event-venue">Barot Village Marriage Palace,<br/>Barot, Kaithal, Haryana</div>
+                            <a href="https://maps.app.goo.gl/KSzgVodgMydCuB5Z8" target="_blank" class="btn-loc">Get Directions</a>
+                        </div>
+                    </div>
 
-  <section class="section" id="family">
-    <div class="section-inner">
-      <p class="section-kicker reveal">With Warm Regards</p>
-      <h2 class="section-title reveal">Our Families</h2>
-      <div class="divider reveal"></div>
-      <div class="reveal">
-        <div class="family-names">
-          <span>Shri Maniram Sharma</span>
-          <span>Shri Rupchand Sharma</span>
-          <span>Shri Gopal Sharma</span>
-          <span>Shri Jaipal Sharma</span>
-          <span>Shri Ramdiya Sharma</span>
-          <span>Shri Bramdutt Sharma</span>
-          <span>Entre Sharma Family</span>
-          <span>Relatives & Friends</span>
-        </div>
-      </div>
-      <div class="reveal" style="margin-top:30px">
-        <div class="section-kicker">Business Associates</div>
-        <div class="family-names" style="font-size:1.05rem">
-          <span>Balaji Steel Industries (Rolling Mill)</span>
-          <span>Rahul Steels</span>
-          <span>Chennai</span>
-        </div>
-      </div>
-      <div class="rsvp-box reveal">
-        <p class="section-kicker" style="color:var(--gold)">RSVP</p>
-        <p style="font-family:'Cinzel'; font-size:1.4rem; color:#fff">Rahul Sharma</p>
-        <p class="rsvp-numbers">8939338112 / 9444909433</p>
-      </div>
-    </div>
-  </section>
+                    <!-- Baraat -->
+                    <div class="event-box reveal">
+                        <img src="assets/baraat.jpeg" alt="Baraat" class="event-img" />
+                        <div class="event-content">
+                            <p class="event-name">BARAAT</p>
+                            <p class="event-date">THURSDAY, <strong>DEC 03</strong> 2026</p>
+                            <p class="event-time">3:00 p.m onwards</p>
+                            <div class="event-venue">Wedstation by 5 Senses Hotels,<br/>Israna Panipat, Haryana</div>
+                            <a href="https://maps.app.goo.gl/ZUoLPJZBLwBQ2sjL8" target="_blank" class="btn-loc">Get Directions</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-  <footer id="footer">
-    <p class="footer-text">Blessings are the only gifts we pursue, our happiest day needs a hug from you, mark your calendars, set the date we can't wait to see you at the gate! We look forward to share this beautiful moment with you & your family.</p>
-    <p class="footer-brand">Sharma Family</p>
-  </footer>
+        <!-- VENUE -->
+        <section class="section" id="venue">
+            <div class="section-inner">
+                <p class="section-kicker reveal">The Celebration</p>
+                <h2 class="section-title reveal">Vivah Sthal</h2>
+                <div class="divider reveal"></div>
+                <div class="venue-card reveal">
+                    <img src="assets/venue.jpeg" alt="Venue" />
+                    <a href="https://maps.app.goo.gl/ZUoLPJZBLwBQ2sjL8" target="_blank" class="btn-loc">Get Directions</a>
+                </div>
+            </div>
+        </section>
 
-</main>
+        <!-- SCRATCH -->
+        <section class="section" id="scratch-section">
+            <div class="section-inner">
+                <p class="section-kicker reveal">A Special Date</p>
+                <h2 class="section-title reveal">Scratch to Reveal</h2>
+                <div class="divider reveal"></div>
+                
+                <div class="scratch-container reveal">
+                    <div class="scratch-text">
+                        <h4>BARAAT DATE</h4>
+                        <p>03 Dec 2026</p>
+                    </div>
+                    <canvas id="scratch-canvas"></canvas>
+                </div>
+            </div>
+        </section>
 
-<audio id="bg-music" loop preload="auto"><source src="assets/weddingbg.mpeg" type="audio/mpeg" /></audio>
-<audio id="elephant-sound" preload="auto"><source src="assets/elephantsound.mpeg" type="audio/mpeg" /></audio>
+        <!-- COUNTDOWN -->
+        <section class="section" id="countdown">
+            <div class="section-inner">
+                <p class="section-kicker" style="color: var(--gold);">Counting down to the</p>
+                <h2 class="section-title">Baraat</h2>
+                
+                <div class="cd-wrap reveal">
+                    <div class="cd-grid">
+                        <div class="cd-box"><span class="cd-num" id="cd-days">00</span><span class="cd-lbl">Days</span></div>
+                        <div class="cd-box"><span class="cd-num" id="cd-hours">00</span><span class="cd-lbl">Hours</span></div>
+                        <div class="cd-box"><span class="cd-num" id="cd-mins">00</span><span class="cd-lbl">Mins</span></div>
+                        <div class="cd-box"><span class="cd-num" id="cd-secs">00</span><span class="cd-lbl">Secs</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-<script>
-(function(){
-'use strict';
-if(typeof gsap !== 'undefined'){ gsap.registerPlugin(ScrollTrigger); }
+        <!-- FAMILY -->
+        <section class="section" id="family">
+            <div class="section-inner">
+                <p class="section-kicker reveal">With Warm Regards & Blessings</p>
+                <h2 class="section-title reveal">Our Families</h2>
+                <div class="divider reveal"></div>
 
-var WEDDING_DATE = new Date('2026-12-03T15:00:00+05:30');
-var DPR = Math.min(window.devicePixelRatio || 1, 2);
+                <div class="reveal">
+                    <div class="family-names">
+                        <span>Shri Maniram Sharma</span>
+                        <span>Shri Rupchand Sharma</span>
+                        <span>Shri Gopal Sharma</span>
+                        <span>Shri Jaipal Sharma</span>
+                        <span>Shri Ramdiya Sharma</span>
+                        <span>Shri Bramdutt Sharma</span>
+                        <span>Entre Sharma Family</span>
+                        <span>Relatives & Friends</span>
+                    </div>
+                </div>
 
-// ==========================================
-// 1. AUTO AUDIO LOGIC
-// ==========================================
-var bgMusic = document.getElementById('bg-music');
-var ellieSound = document.getElementById('elephant-sound');
-var musicBtn = document.getElementById('music-btn');
-var musicPlaying = false;
+                <div class="reveal" style="margin-top: 40px;">
+                    <div class="section-kicker">Business Associates</div>
+                    <div class="family-names" style="font-size: 1.1rem;">
+                        <span>Balaji Steel Industries (Rolling Mill)</span>
+                        <span>Rahul Steels</span>
+                        <span>Chennai</span>
+                    </div>
+                </div>
 
-function playOpeningAudio(){
-  if(!ellieSound || !bgMusic) return;
-  ellieSound.volume = 0.8;
-  bgMusic.volume = 0.4;
-  
-  // Play 3 times
-  ellieSound.play().catch(function(){});
-  setTimeout(function(){ ellieSound.currentTime = 0; ellieSound.play().catch(function(){}); }, 700);
-  setTimeout(function(){ ellieSound.currentTime = 0; ellieSound.play().catch(function(){}); }, 1400);
+                <div class="rsvp-box reveal">
+                    <p class="section-kicker" style="color: var(--gold);">RSVP</p>
+                    <p style="font-family: var(--font-heading); font-size: 1.5rem; color: #fff; margin-bottom: 5px;">Rahul Sharma</p>
+                    <p class="rsvp-numbers">8939338112 / 9444909433</p>
+                </div>
+            </div>
+        </section>
 
-  // Start Song
-  setTimeout(function(){
-    bgMusic.play().then(function(){
-      musicPlaying = true;
-      musicBtn.classList.add('playing');
-      musicBtn.classList.add('visible');
-    }).catch(function(){ console.log('Autoplay blocked'); });
-  }, 2800);
-}
+        <!-- FOOTER -->
+        <footer id="footer">
+            <p class="footer-text">Blessings are the only gifts we pursue, our happiest day needs a hug from you, mark your calendars, set the date we can't wait to see you at the gate! We look forward to share this beautiful moment with you & your family.</p>
+            <p class="footer-brand">Sharma Family</p>
+        </footer>
+    </main>
 
-// Trigger on first interaction (or immediately if browser allows)
-document.body.addEventListener('click', function initAudio(){
-  playOpeningAudio();
-  document.body.removeEventListener('click', initAudio);
-}, { once: true });
-setTimeout(playOpeningAudio, 100); // Try auto-play immediately
+    <!-- Audio Files -->
+    <audio id="bg-music" loop preload="auto">
+        <source src="assets/weddingbg.mpeg" type="audio/mpeg" />
+    </audio>
+    <audio id="elephant-sound" preload="auto">
+        <source src="assets/elephantsound.mpeg" type="audio/mpeg" />
+    </audio>
 
-musicBtn.addEventListener('click', function(e){
-  e.stopPropagation();
-  if(musicPlaying){ bgMusic.pause(); musicPlaying = false; musicBtn.classList.remove('playing'); }
-  else { bgMusic.play(); musicPlaying = true; musicBtn.classList.add('playing'); }
-});
+    <script>
+        // Register GSAP ScrollTrigger
+        if (typeof gsap !== 'undefined') {
+            gsap.registerPlugin(ScrollTrigger);
+        }
 
-// ==========================================
-// 2. OPENING SEQUENCE (GSAP 4 FRAMES)
-// ==========================================
-var opening = document.getElementById('opening');
-var tapHint = document.getElementById('tap-hint');
-var invite = document.getElementById('invite');
-var cardSplit = document.getElementById('card-split');
+        // Target Date: Dec 3, 2026, 3:00 PM IST
+        var WEDDING_DATE = new Date('2026-12-03T15:00:00+05:30');
+        var DPR = Math.min(window.devicePixelRatio || 1, 2);
 
-var f1 = document.getElementById('f1'), f2 = document.getElementById('f2'), f3 = document.getElementById('f3'), f4 = document.getElementById('f4');
+        // ==========================================
+        // 1. AUDIO LOGIC (AUTO-PLAY)
+        // ==========================================
+        var bgMusic = document.getElementById('bg-music');
+        var ellieSound = document.getElementById('elephant-sound');
+        var musicBtn = document.getElementById('music-btn');
+        var musicPlaying = false;
+        var audioStarted = false;
 
-function openCard(){
-  if(opening.classList.contains('opened')) return;
-  opening.classList.add('opened');
-  
-  var tl = gsap.timeline({
-    onComplete: function(){ opening.style.display = 'none'; document.body.style.overflow = ''; }
-  });
+        function playOpeningAudio() {
+            if (audioStarted) return;
+            audioStarted = true;
 
-  tl.to(tapHint, { opacity: 0, duration: 0.3 });
+            if (!ellieSound || !bgMusic) return;
+            
+            ellieSound.volume = 0.8;
+            bgMusic.volume = 0.5;
+            
+            // Play Elephant Trumpet 3 times
+            ellieSound.play().catch(function() {});
+            setTimeout(function() { 
+                ellieSound.currentTime = 0; 
+                ellieSound.play().catch(function() {}); 
+            }, 700);
+            setTimeout(function() { 
+                ellieSound.currentTime = 0; 
+                ellieSound.play().catch(function() {}); 
+            }, 1400);
 
-  // 4-Frame Sequence
-  tl.to(f1, { opacity: 0, scale: 1.05, duration: 0.8, ease: "power2.inOut" }, 0.2);
-  tl.to(f2, { opacity: 1, scale: 1, duration: 0.8, ease: "power2.inOut" }, 0.3);
-  
-  tl.to(f2, { opacity: 0, scale: 1.05, duration: 0.8, ease: "power2.inOut" }, 1.2);
-  tl.to(f3, { opacity: 1, scale: 1, duration: 0.8, ease: "power2.inOut" }, 1.3);
+            // Start Song after trumpets
+            setTimeout(function() {
+                bgMusic.play().then(function() {
+                    musicPlaying = true;
+                    musicBtn.classList.add('playing');
+                    musicBtn.classList.add('visible');
+                }).catch(function(e) {
+                    console.log('Autoplay blocked by browser. Waiting for tap.');
+                });
+            }, 2800);
+        }
 
-  tl.to(f3, { opacity: 0, scale: 1.05, duration: 0.8, ease: "power2.inOut" }, 2.2);
-  tl.to(f4, { opacity: 1, scale: 1, duration: 0.8, ease: "power2.inOut" }, 2.3);
+        // Try to autoplay immediately on load
+        setTimeout(playOpeningAudio, 500);
 
-  // Zoom in on final frame
-  tl.to('#opening-card', { scale: 1.1, duration: 0.8, ease: "power2.inOut" }, 3.2);
+        // Fallback: Unlock audio on first user interaction anywhere on screen
+        document.body.addEventListener('click', function initAudio() {
+            playOpeningAudio();
+            if (!musicPlaying && bgMusic) {
+                bgMusic.play().then(function() {
+                    musicPlaying = true;
+                    musicBtn.classList.add('playing');
+                    musicBtn.classList.add('visible');
+                }).catch(function() {});
+            }
+            document.body.removeEventListener('click', initAudio);
+        }, { once: true });
 
-  // Show Doors
-  tl.add(function(){ opening.classList.add('show-doors'); }, 3.5);
-  tl.to('.door-panel.left', { rotateY: -105, x: '-20%', duration: 1.5, ease: "power2.inOut" }, 3.6);
-  tl.to('.door-panel.right', { rotateY: 105, x: '20%', duration: 1.5, ease: "power2.inOut" }, 3.6);
+        // Toggle Music Button
+        musicBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (musicPlaying) {
+                bgMusic.pause();
+                musicPlaying = false;
+                musicBtn.classList.remove('playing');
+            } else {
+                bgMusic.play();
+                musicPlaying = true;
+                musicBtn.classList.add('playing');
+            }
+        });
 
-  // THE SPLIT
-  tl.add(function(){ 
-    f4.style.opacity = '0'; 
-    cardSplit.style.display = 'block'; 
-  }, 3.8);
+        // ==========================================
+        // 2. OPENING SEQUENCE (4 FRAMES + SPLIT)
+        // ==========================================
+        var opening = document.getElementById('opening');
+        var tapHint = document.getElementById('tap-hint');
+        var invite = document.getElementById('invite');
+        var cardSplit = document.getElementById('card-split');
+        var opened = false;
 
-  tl.to('.card-half.left', { rotateY: -110, duration: 1.8, ease: "power2.inOut" }, 3.9);
-  tl.to('.card-half.right', { rotateY: 110, duration: 1.8, ease: "power2.inOut" }, 3.9);
+        var f1 = document.getElementById('f1');
+        var f2 = document.getElementById('f2');
+        var f3 = document.getElementById('f3');
+        var f4 = document.getElementById('f4');
 
-  // Elephants slide away
-  tl.to('#ellie-left', { xPercent: -100, opacity: 0, duration: 1.2, ease: "power2.in" }, 4.0);
-  tl.to('#ellie-right', { xPercent: 100, opacity: 0, duration: 1.2, ease: "power2.in" }, 4.0);
+        // Show tap hint after 1 second
+        setTimeout(function() {
+            tapHint.style.opacity = '1';
+        }, 1500);
 
-  // Light Beam & Reveal
-  tl.add(function(){ opening.classList.add('split'); }, 4.5);
+        function openCard() {
+            if (opened) return;
+            opened = true;
+            
+            var tl = gsap.timeline({
+                onComplete: function() {
+                    opening.style.display = 'none';
+                    document.body.style.overflow = '';
+                }
+            });
 
-  tl.add(function(){
-    invite.classList.add('visible');
-    startAnimations();
-  }, 5.2);
+            // Hide Tap Hint
+            tl.to(tapHint, { opacity: 0, duration: 0.3 });
 
-  tl.to(opening, { opacity: 0, duration: 1, ease: "power2.inOut" }, 5.4);
-}
+            // Cinematic 4-Frame Sequence
+            tl.to(f1, { opacity: 0, scale: 1.05, duration: 0.8, ease: "power2.inOut" }, 0.2);
+            tl.to(f2, { opacity: 1, scale: 1, duration: 0.8, ease: "power2.inOut" }, 0.3);
+            
+            tl.to(f2, { opacity: 0, scale: 1.05, duration: 0.8, ease: "power2.inOut" }, 1.2);
+            tl.to(f3, { opacity: 1, scale: 1, duration: 0.8, ease: "power2.inOut" }, 1.3);
+            
+            tl.to(f3, { opacity: 0, scale: 1.05, duration: 0.8, ease: "power2.inOut" }, 2.2);
+            tl.to(f4, { opacity: 1, scale: 1, duration: 0.8, ease: "power2.inOut" }, 2.3);
 
-document.getElementById('opening-card').addEventListener('click', openCard);
+            // Zoom into final card
+            tl.to('#opening-card', { scale: 1.1, duration: 0.8, ease: "power2.inOut" }, 3.2);
 
-// ==========================================
-// 3. FALLING FLOWERS (SVG CANVAS)
-// ==========================================
-function initFlowers(){
-  var canvas = document.getElementById('flower-canvas');
-  if(!canvas) return;
-  var ctx = canvas.getContext('2d');
-  var W = window.innerWidth, H = window.innerHeight;
-  canvas.width = W * DPR; canvas.height = H * DPR;
-  canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
-  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+            // Show Doors Behind
+            tl.add(function() { opening.classList.add('show-doors'); }, 3.5);
+            tl.to('.door-panel.left', { rotateY: -105, x: '-20%', duration: 1.5, ease: "power2.inOut" }, 3.6);
+            tl.to('.door-panel.right', { rotateY: 105, x: '20%', duration: 1.5, ease: "power2.inOut" }, 3.6);
 
-  var flowers = [];
-  var numFlowers = window.innerWidth < 500 ? 20 : 40;
+            // THE CARD SPLIT
+            tl.add(function() { 
+                f4.style.opacity = '0'; 
+                cardSplit.style.display = 'block'; 
+            }, 3.8);
+            
+            tl.to('.card-half.left', { rotateY: -110, duration: 1.8, ease: "power2.inOut" }, 3.9);
+            tl.to('.card-half.right', { rotateY: 110, duration: 1.8, ease: "power2.inOut" }, 3.9);
 
-  for(var i=0; i<numFlowers; i++){
-    flowers.push({
-      x: Math.random() * W,
-      y: Math.random() * -H,
-      size: 10 + Math.random() * 15,
-      speedY: 0.5 + Math.random() * 1.5,
-      speedX: -0.5 + Math.random(),
-      rot: Math.random() * Math.PI * 2,
-      rotSpeed: -0.02 + Math.random() * 0.04,
-      color: Math.random() > 0.5 ? '#c49a45' : '#e8d09e', // Gold / Light Gold
-      opacity: 0.6 + Math.random() * 0.4
-    });
-  }
+            // Elephants slide away
+            tl.to('#ellie-left', { xPercent: -100, opacity: 0, duration: 1.2, ease: "power2.in" }, 4.0);
+            tl.to('#ellie-right', { xPercent: 100, opacity: 0, duration: 1.2, ease: "power2.in" }, 4.0);
 
-  function drawFlower(ctx, x, y, size, rot, color, opacity){
-    ctx.save();
-    ctx.translate(x, y);
-    ctx.rotate(rot);
-    ctx.globalAlpha = opacity;
-    ctx.fillStyle = color;
-    // Draw simple 5-petal flower
-    for(var i=0; i<5; i++){
-      ctx.beginPath();
-      ctx.ellipse(0, -size*0.6, size*0.4, size*0.8, (i * Math.PI * 2) / 5, 0, Math.PI * 2);
-      ctx.fill();
-    }
-    ctx.restore();
-  }
+            // Light Beam & Reveal Main Site
+            tl.add(function() { opening.classList.add('split'); }, 4.5);
+            
+            tl.add(function() {
+                invite.classList.add('visible');
+                startHeroAnimations();
+                initScrollAnimations();
+                initFallingFlowers();
+            }, 5.2);
 
-  function loop(){
-    ctx.clearRect(0, 0, W, H);
-    for(var i=0; i<numFlowers; i++){
-      var f = flowers[i];
-      f.y += f.speedY;
-      f.x += f.speedX;
-      f.rot += f.rotSpeed;
-      if(f.y > H + 20){
-        f.y = -20;
-        f.x = Math.random() * W;
-      }
-      drawFlower(ctx, f.x, f.y, f.size, f.rot, f.color, f.opacity);
-    }
-    requestAnimationFrame(loop);
-  }
-  loop();
-}
+            tl.to(opening, { opacity: 0, duration: 1, ease: "power2.inOut" }, 5.4);
+        }
 
-// ==========================================
-// 4. SCROLL & REVEAL
-// ==========================================
-function startAnimations(){
-  initFlowers();
-  gsap.to('.reveal', { opacity: 1, y: 0, duration: 1.2, stagger: 0.15, ease: "power3.out" });
-  
-  gsap.utils.toArray('.reveal').forEach(function(elem){
-    if(elem.closest('#hero')) return; 
-    gsap.to(elem, {
-      y: 0, opacity: 1, duration: 1, ease: "power3.out",
-      scrollTrigger: { trigger: elem, start: "top 85%", toggleActions: "play none none reverse" }
-    });
-  });
-}
+        document.getElementById('opening-card').addEventListener('click', openCard);
 
-// ==========================================
-// 5. SCRATCH TO REVEAL
-// ==========================================
-var scratchCanvas = document.getElementById('scratch-canvas');
-if(scratchCanvas){
-  var sctx = scratchCanvas.getContext('2d');
-  var scratching = false, lastX = 0, lastY = 0, revealed = false;
+        // Lock body scroll during opening
+        document.body.style.overflow = 'hidden';
 
-  function setupScratch(){
-    var rect = scratchCanvas.parentElement.getBoundingClientRect();
-    scratchCanvas.width = rect.width * DPR; scratchCanvas.height = rect.height * DPR;
-    scratchCanvas.style.width = rect.width + 'px'; scratchCanvas.style.height = rect.height + 'px';
-    sctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+        // ==========================================
+        // 3. FALLING FLOWERS CANVAS
+        // ==========================================
+        function initFallingFlowers() {
+            var canvas = document.getElementById('flower-canvas');
+            if (!canvas) return;
+            var ctx = canvas.getContext('2d');
+            var W = window.innerWidth;
+            var H = window.innerHeight;
+            
+            canvas.width = W * DPR;
+            canvas.height = H * DPR;
+            canvas.style.width = W + 'px';
+            canvas.style.height = H + 'px';
+            ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
 
-    var grad = sctx.createLinearGradient(0, 0, rect.width, rect.height);
-    grad.addColorStop(0, '#c49a45'); grad.addColorStop(0.5, '#fdfbf7'); grad.addColorStop(1, '#c49a45');
-    sctx.fillStyle = grad; sctx.fillRect(0, 0, rect.width, rect.height);
+            var flowers = [];
+            var numFlowers = window.innerWidth < 500 ? 20 : 40;
 
-    sctx.fillStyle = 'rgba(107,26,35,0.8)'; sctx.font = 'bold 20px "Cinzel", serif';
-    sctx.textAlign = 'center'; sctx.textBaseline = 'middle';
-    sctx.fillText('SCRATCH', rect.width / 2, rect.height / 2 - 10);
-    sctx.font = '600 12px "Cinzel", serif'; sctx.fillText('TO REVEAL', rect.width / 2, rect.height / 2 + 15);
+            for (var i = 0; i < numFlowers; i++) {
+                flowers.push({
+                    x: Math.random() * W,
+                    y: Math.random() * -H,
+                    size: 10 + Math.random() * 15,
+                    speedY: 0.5 + Math.random() * 1.5,
+                    speedX: -0.5 + Math.random(),
+                    rot: Math.random() * Math.PI * 2,
+                    rotSpeed: -0.02 + Math.random() * 0.04,
+                    color: Math.random() > 0.5 ? '#c49a45' : '#e8d09e',
+                    opacity: 0.6 + Math.random() * 0.4
+                });
+            }
 
-    sctx.globalCompositeOperation = 'destination-out';
-  }
+            function drawFlower(ctx, x, y, size, rot, color, opacity) {
+                ctx.save();
+                ctx.translate(x, y);
+                ctx.rotate(rot);
+                ctx.globalAlpha = opacity;
+                ctx.fillStyle = color;
+                for (var i = 0; i < 5; i++) {
+                    ctx.beginPath();
+                    ctx.ellipse(0, -size * 0.6, size * 0.4, size * 0.8, (i * Math.PI * 2) / 5, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                ctx.restore();
+            }
 
-  function getPos(e){
-    var rect = scratchCanvas.getBoundingClientRect();
-    var clientX = e.touches ? e.touches[0].clientX : e.clientX;
-    var clientY = e.touches ? e.touches[0].clientY : e.clientY;
-    return { x: clientX - rect.left, y: clientY - rect.top };
-  }
-  function scratchAt(x, y){ sctx.beginPath(); sctx.arc(x, y, 30, 0, Math.PI * 2); sctx.fill(); }
-  function startScratch(e){ if(revealed) return; scratching = true; var pos = getPos(e); lastX = pos.x; lastY = pos.y; scratchAt(lastX, lastY); }
-  function moveScratch(e){
-    if(!scratching || revealed) return; e.preventDefault(); var pos = getPos(e);
-    for(var i = 0; i <= 8; i++){ scratchAt(lastX + (pos.x - lastX) * (i / 8), lastY + (pos.y - lastY) * (i / 8)); }
-    lastX = pos.x; lastY = pos.y; checkReveal();
-  }
-  function endScratch(){ scratching = false; checkReveal(); }
-  function checkReveal(){
-    if(revealed) return; var w = scratchCanvas.width, h = scratchCanvas.height, data;
-    try { data = sctx.getImageData(0, 0, w, h).data; } catch(err){ return; }
-    var cleared = 0, total = 0;
-    for(var i = 3; i < data.length; i += 4 * 16){ total++; if(data[i] < 40) cleared++; }
-    if(total > 0 && cleared / total > 0.5){ revealed = true; gsap.to(scratchCanvas, { opacity: 0, duration: 0.8 }); }
-  }
+            function loop() {
+                ctx.clearRect(0, 0, W, H);
+                for (var i = 0; i < numFlowers; i++) {
+                    var f = flowers[i];
+                    f.y += f.speedY;
+                    f.x += f.speedX;
+                    f.rot += f.rotSpeed;
+                    if (f.y > H + 20) {
+                        f.y = -20;
+                        f.x = Math.random() * W;
+                    }
+                    drawFlower(ctx, f.x, f.y, f.size, f.rot, f.color, f.opacity);
+                }
+                requestAnimationFrame(loop);
+            }
+            loop();
+        }
 
-  scratchCanvas.addEventListener('mousedown', startScratch); scratchCanvas.addEventListener('mousemove', moveScratch);
-  scratchCanvas.addEventListener('mouseup', endScratch); scratchCanvas.addEventListener('mouseleave', endScratch);
-  scratchCanvas.addEventListener('touchstart', startScratch, { passive: true }); scratchCanvas.addEventListener('touchmove', moveScratch, { passive: false }); scratchCanvas.addEventListener('touchend', endScratch, { passive: true });
-  window.addEventListener('load', function(){ setTimeout(setupScratch, 300); });
-}
+        // ==========================================
+        // 4. SCROLL & HERO ANIMATIONS
+        // ==========================================
+        function startHeroAnimations() {
+            gsap.to('.reveal', { opacity: 1, y: 0, duration: 1.2, stagger: 0.15, ease: "power3.out" });
+        }
 
-// ==========================================
-// 6. COUNTDOWN
-// ==========================================
-var elDays = document.getElementById('cd-days'), elHours = document.getElementById('cd-hours'), elMins = document.getElementById('cd-mins'), elSecs = document.getElementById('cd-secs'), prevSecs = -1;
-function pad(n){ return (n < 10 ? '0' : '') + n; }
-function tick(){
-  var diff = WEDDING_DATE.getTime() - new Date().getTime(); if(diff < 0) diff = 0;
-  if(elDays) elDays.textContent = pad(Math.floor(diff / 86400000));
-  if(elHours) elHours.textContent = pad(Math.floor((diff % 86400000) / 3600000));
-  if(elMins) elMins.textContent = pad(Math.floor((diff % 3600000) / 60000));
-  if(elSecs){
-    var s = Math.floor((diff % 60000) / 1000); elSecs.textContent = pad(s);
-    if(s !== prevSecs && typeof gsap !== 'undefined'){ prevSecs = s; gsap.fromTo(elSecs.parentElement, { rotateX: -18 }, { rotateX: 0, duration: 0.5, ease: 'power2.out' }); }
-  }
-}
-tick(); setInterval(tick, 1000);
+        function initScrollAnimations() {
+            gsap.utils.toArray('.reveal').forEach(function(elem) {
+                if (elem.closest('#hero')) return; 
+                gsap.to(elem, {
+                    y: 0, 
+                    opacity: 1, 
+                    duration: 1, 
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: elem,
+                        start: "top 85%",
+                        toggleActions: "play none none reverse"
+                    }
+                });
+            });
+        }
 
-// Fix for mobile viewport height
-function setVH(){ document.documentElement.style.setProperty('--vh', window.innerHeight * 0.01 + 'px'); }
-setVH(); window.addEventListener('resize', setVH);
+        // ==========================================
+        // 5. SCRATCH TO REVEAL
+        // ==========================================
+        var scratchCanvas = document.getElementById('scratch-canvas');
+        if (scratchCanvas) {
+            var sctx = scratchCanvas.getContext('2d');
+            var scratching = false;
+            var lastX = 0;
+            var lastY = 0;
+            var revealed = false;
 
-})();
-</script>
+            function setupScratch() {
+                var rect = scratchCanvas.parentElement.getBoundingClientRect();
+                scratchCanvas.width = rect.width * DPR;
+                scratchCanvas.height = rect.height * DPR;
+                scratchCanvas.style.width = rect.width + 'px';
+                scratchCanvas.style.height = rect.height + 'px';
+                sctx.setTransform(DPR, 0, 0, DPR, 0, 0);
 
+                var grad = sctx.createLinearGradient(0, 0, rect.width, rect.height);
+                grad.addColorStop(0, '#c49a45');
+                grad.addColorStop(0.5, '#fdfbf7');
+                grad.addColorStop(1, '#c49a45');
+                sctx.fillStyle = grad;
+                sctx.fillRect(0, 0, rect.width, rect.height);
+
+                sctx.fillStyle = 'rgba(107,26,35,0.8)';
+                sctx.font = 'bold 20px "Cinzel", serif';
+                sctx.textAlign = 'center';
+                sctx.textBaseline = 'middle';
+                sctx.fillText('SCRATCH', rect.width / 2, rect.height / 2 - 10);
+                
+                sctx.font = '600 12px "Cinzel", serif';
+                sctx.fillText('TO REVEAL', rect.width / 2, rect.height / 2 + 15);
+
+                sctx.globalCompositeOperation = 'destination-out';
+            }
+
+            function getPos(e) {
+                var rect = scratchCanvas.getBoundingClientRect();
+                var clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                var clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                return { x: clientX - rect.left, y: clientY - rect.top };
+            }
+
+            function scratchAt(x, y) {
+                sctx.beginPath();
+                sctx.arc(x, y, 30, 0, Math.PI * 2);
+                sctx.fill();
+            }
+
+            function startScratch(e) {
+                if (revealed) return;
+                scratching = true;
+                var pos = getPos(e);
+                lastX = pos.x;
+                lastY = pos.y;
+                scratchAt(lastX, lastY);
+            }
+
+            function moveScratch(e) {
+                if (!scratching || revealed) return;
+                e.preventDefault();
+                var pos = getPos(e);
+                for (var i = 0; i <= 8; i++) {
+                    scratchAt(lastX + (pos.x - lastX) * (i / 8), lastY + (pos.y - lastY) * (i / 8));
+                }
+                lastX = pos.x;
+                lastY = pos.y;
+                checkReveal();
+            }
+
+            function endScratch() {
+                scratching = false;
+                checkReveal();
+            }
+
+            function checkReveal() {
+                if (revealed) return;
+                var w = scratchCanvas.width;
+                var h = scratchCanvas.height;
+                var data;
+                try {
+                    data = sctx.getImageData(0, 0, w, h).data;
+                } catch (err) {
+                    return;
+                }
+                var cleared = 0;
+                var total = 0;
+                for (var i = 3; i < data.length; i += 4 * 16) {
+                    total++;
+                    if (data[i] < 40) cleared++;
+                }
+                if (total > 0 && cleared / total > 0.5) {
+                    revealed = true;
+                    gsap.to(scratchCanvas, { opacity: 0, duration: 0.8 });
+                }
+            }
+
+            scratchCanvas.addEventListener('mousedown', startScratch);
+            scratchCanvas.addEventListener('mousemove', moveScratch);
+            scratchCanvas.addEventListener('mouseup', endScratch);
+            scratchCanvas.addEventListener('mouseleave', endScratch);
+            scratchCanvas.addEventListener('touchstart', startScratch, { passive: true });
+            scratchCanvas.addEventListener('touchmove', moveScratch, { passive: false });
+            scratchCanvas.addEventListener('touchend', endScratch, { passive: true });
+
+            window.addEventListener('load', function() {
+                setTimeout(setupScratch, 300);
+            });
+        }
+
+        // ==========================================
+        // 6. COUNTDOWN
+        // ==========================================
+        var elDays = document.getElementById('cd-days');
+        var elHours = document.getElementById('cd-hours');
+        var elMins = document.getElementById('cd-mins');
+        var elSecs = document.getElementById('cd-secs');
+        var prevSecs = -1;
+
+        function pad(n) {
+            return (n < 10 ? '0' : '') + n;
+        }
+
+        function tick() {
+            var diff = WEDDING_DATE.getTime() - new Date().getTime();
+            if (diff < 0) diff = 0;
+            
+            if (elDays) elDays.textContent = pad(Math.floor(diff / 86400000));
+            if (elHours) elHours.textContent = pad(Math.floor((diff % 86400000) / 3600000));
+            if (elMins) elMins.textContent = pad(Math.floor((diff % 3600000) / 60000));
+            
+            if (elSecs) {
+                var s = Math.floor((diff % 60000) / 1000);
+                elSecs.textContent = pad(s);
+                if (s !== prevSecs && typeof gsap !== 'undefined') {
+                    prevSecs = s;
+                    gsap.fromTo(elSecs.parentElement, { rotateX: -18 }, { rotateX: 0, duration: 0.5, ease: 'power2.out' });
+                }
+            }
+        }
+        
+        tick();
+        setInterval(tick, 1000);
+
+        // Mobile Viewport Fix
+        function setVH() {
+            document.documentElement.style.setProperty('--vh', window.innerHeight * 0.01 + 'px');
+        }
+        setVH();
+        window.addEventListener('resize', setVH);
+
+    </script>
 </body>
 </html>
