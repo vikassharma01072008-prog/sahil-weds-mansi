@@ -65,7 +65,7 @@
         @keyframes wave { 0% { transform: scale(0.8); opacity: 0.8; } 100% { transform: scale(1.8); opacity: 0; } }
 
         /* ============================================================
-           OPENING VIDEO (FULL SCREEN - NO BLACK BG)
+           OPENING VIDEO
            ============================================================ */
         #opening {
             position: fixed; inset: 0; z-index: 1000;
@@ -83,7 +83,6 @@
         .video-elephant.left { left: -2%; }
         .video-elephant.right { right: -2%; }
 
-        /* Tap Overlay over Video */
         .tap-overlay {
             position: absolute; inset: 0; z-index: 15;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -109,15 +108,10 @@
         }
 
         /* ============================================================
-           FALLING FLOWERS (ANIMATION)
+           FALLING FLOWERS
            ============================================================ */
-        .flower-container {
-            position: fixed; inset: 0; z-index: 99; pointer-events: none; overflow: hidden;
-        }
-        .falling-flower {
-            position: absolute; top: -100px; width: 40px; height: auto;
-            animation: fall linear infinite; opacity: 0.8;
-        }
+        .flower-container { position: fixed; inset: 0; z-index: 99; pointer-events: none; overflow: hidden; }
+        .falling-flower { position: absolute; top: -100px; width: 40px; height: auto; animation: fall linear infinite; opacity: 0.8; }
         @keyframes fall {
             0% { transform: translateY(0) rotate(0deg); opacity: 0; }
             10% { opacity: 0.8; }
@@ -126,7 +120,7 @@
         }
 
         /* ============================================================
-           MAIN SECTIONS
+           MAIN SECTIONS & MOBILE BG FIX
            ============================================================ */
         #invite { opacity: 0; position: relative; background-color: var(--maroon-deep); transition: opacity 1.2s ease; }
         #invite.visible { opacity: 1; }
@@ -142,34 +136,33 @@
         
         .peacock-divider { width: 140px; margin: 20px auto; display: block; opacity: 0.9; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5)); }
 
-        /* ============================================================
-           STATIC DECORATIONS (flower1, flower2)
-           ============================================================ */
-        .static-flower {
-            position: absolute; width: 120px; height: auto; z-index: 2; pointer-events: none; opacity: 0.85;
-        }
+        /* Static decorations */
+        .static-flower { position: absolute; width: 120px; height: auto; z-index: 2; pointer-events: none; opacity: 0.85; }
         .static-flower.tl { top: 0; left: 0; transform: rotate(0deg); }
         .static-flower.tr { top: 0; right: 0; transform: scaleX(-1); }
         .static-flower.bl { bottom: 0; left: 0; transform: scaleY(-1); }
         .static-flower.br { bottom: 0; right: 0; transform: scale(-1, -1); }
 
-        /* HERO (Palace Visible) */
-        #hero { background: url('assets/palace.jpeg') center/cover fixed; }
+        /* HERO Mobile Fix */
+        #hero { background: url('assets/palace.jpeg') top center / cover no-repeat scroll; }
+        @media(min-width: 768px) { #hero { background-attachment: fixed; } }
+        
         #hero .bg-overlay { position: absolute; inset: 0; background: rgba(253, 251, 247, 0.25); z-index: 1; } 
 
-        .hero-para { font-size: 1.3rem; line-height: 1.6; color: var(--maroon-text); margin-bottom: 30px; font-style: italic; font-weight: 600; position: relative; z-index: 5;}
+        .hero-para { font-size: 1.3rem; line-height: 1.6; color: var(--maroon-text); margin-bottom: 30px; font-style: italic; font-weight: 700; position: relative; z-index: 5;}
         .hero-couple-grid { display: flex; flex-direction: column; gap: 30px; margin-bottom: 40px; position: relative; z-index: 5;}
         @media(min-width: 768px) { .hero-couple-grid { flex-direction: row; justify-content: space-between; align-items: center; } }
 
         .hero-side { flex: 1; text-align: center; }
-        .hero-name-rich { font-family: 'Great Vibes', cursive; font-size: clamp(2.8rem, 7vw, 4.5rem); color: var(--maroon-text); margin-bottom: 10px; text-shadow: 0 2px 10px rgba(253, 251, 247, 0.8); }
-        .hero-desc { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--maroon-text); line-height: 1.6; font-weight: 600; }
+        .hero-name-rich { font-family: 'Great Vibes', cursive; font-size: clamp(2.8rem, 7vw, 4.5rem); color: var(--maroon-text); margin-bottom: 10px; text-shadow: 0 2px 10px rgba(253, 251, 247, 0.9); }
+        .hero-desc { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--maroon-text); line-height: 1.6; font-weight: 700; text-shadow: 0 1px 5px rgba(253, 251, 247, 0.9); }
 
         .hero-weds-center { font-family: var(--font-script); font-size: clamp(3rem, 8vw, 4.5rem); color: var(--maroon-text); margin: 20px 0; text-align: center; }
         .hero-couple { position: relative; margin: 0 auto; width: 90%; max-width: 400px; z-index: 10; filter: drop-shadow(0 15px 30px rgba(0,0,0,0.5)); }
 
         /* EVENTS */
-        #events { background: url('assets/otherbg.jpeg') center/cover fixed; }
+        #events { background: url('assets/otherbg.jpeg') top center / cover no-repeat scroll; }
+        @media(min-width: 768px) { #events { background-attachment: fixed; } }
         #events .bg-overlay { position: absolute; inset: 0; background: rgba(43, 6, 10, 0.75); z-index: 1; }
 
         .events-wrapper { display: grid; grid-template-columns: 1fr; gap: 40px; margin-top: 40px; position: relative; z-index: 5; }
@@ -189,7 +182,8 @@
         .btn-loc:hover { background-color: var(--gold); color: var(--maroon-deep); }
 
         /* VENUE */
-        #venue { background: url('assets/palace.jpeg') center/cover fixed; }
+        #venue { background: url('assets/palace.jpeg') top center / cover no-repeat scroll; }
+        @media(min-width: 768px) { #venue { background-attachment: fixed; } }
         #venue .bg-overlay { position: absolute; inset: 0; background: rgba(43, 6, 10, 0.8); z-index: 1; }
 
         .venue-card { max-width: 450px; margin: 0 auto; border: 2px solid var(--gold); border-radius: 16px; overflow: hidden; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.8); z-index: 5; }
@@ -197,7 +191,8 @@
         .venue-card .btn-loc { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background-color: rgba(43, 6, 10, 0.95); width: 85%; }
 
         /* SCRATCH */
-        #scratch-section { background: url('assets/scratchbg.jpeg') center/cover fixed; }
+        #scratch-section { background: url('assets/scratchbg.jpeg') top center / cover no-repeat scroll; }
+        @media(min-width: 768px) { #scratch-section { background-attachment: fixed; } }
         #scratch-section .bg-overlay { position: absolute; inset: 0; background: rgba(43, 6, 10, 0.6); z-index: 1; }
 
         .scratch-container { position: relative; width: 100%; max-width: 450px; aspect-ratio: 2/1; margin: 40px auto; border-radius: 12px; overflow: hidden; border: 2px solid var(--gold); background: url('assets/scratchbg.jpeg') center/cover; box-shadow: 0 20px 50px rgba(0,0,0,0.8); z-index: 5; }
@@ -207,7 +202,8 @@
         #scratch-canvas { position: absolute; inset: 0; z-index: 2; cursor: crosshair; touch-action: none; }
 
         /* COUNTDOWN */
-        #countdown { background: url('assets/otherbg.jpeg') center/cover fixed; }
+        #countdown { background: url('assets/otherbg.jpeg') top center / cover no-repeat scroll; }
+        @media(min-width: 768px) { #countdown { background-attachment: fixed; } }
         #countdown .bg-overlay { position: absolute; inset: 0; background: rgba(43, 6, 10, 0.8); z-index: 1; }
 
         .cd-wrap { background-color: rgba(43, 6, 10, 0.9); border: 1px solid var(--gold); border-radius: 20px; padding: 40px 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.8); margin-top: 30px; position: relative; z-index: 5; }
@@ -220,7 +216,8 @@
         .btn-cal:hover { transform: translateY(-3px); }
 
         /* FAMILY */
-        #family { background: url('assets/otherbg.jpeg') center/cover fixed; }
+        #family { background: url('assets/otherbg.jpeg') top center / cover no-repeat scroll; }
+        @media(min-width: 768px) { #family { background-attachment: fixed; } }
         #family .bg-overlay { position: absolute; inset: 0; background: rgba(43, 6, 10, 0.9); z-index: 1; }
 
         .family-elephant { position: absolute; bottom: 0; width: 35vw; max-width: 250px; opacity: 0.15; z-index: 2; pointer-events: none; }
@@ -242,10 +239,8 @@
 </head>
 <body>
 
-    <!-- FALLING FLOWERS CONTAINER -->
     <div class="flower-container" id="flower-container"></div>
 
-    <!-- MUSIC BUTTON -->
     <div id="music-btn" aria-label="Toggle music">
         <div class="sound-wave wave-1"></div>
         <div class="sound-wave wave-2"></div>
@@ -253,25 +248,18 @@
         <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9v2H2v2h3v2c0 3.87 3.13 7 7 7s7-3.13 7-7v-2h3v-2h-3V9c0-3.87-3.13-7-7-7zm0 16c-2.76 0-5-2.24-5-5v-4c0-2.76 2.24-5 5-5s5 2.24 5 5v4c0 2.76-2.24 5-5 5z"/><path d="M12 6c-1.66 0-3 1.34-3 3v4c0 1.66 1.34 3 3 3s3-1.34 3-3V9c0-1.66-1.34-3-3-3z"/></svg>
     </div>
 
-    <!-- OPENING VIDEO -->
     <div id="opening">
         <video id="opening-video" src="assets/opening.mp4" playsinline preload="auto"></video>
-        
         <img src="assets/elephantleft-removebg-preview.png" class="video-elephant left" alt="" />
         <img src="assets/elephantright-removebg-preview.png" class="video-elephant right" alt="" />
-        
         <div class="tap-overlay" id="tap-overlay">
-            <div class="play-btn">
-                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            </div>
+            <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
             <div class="tap-text">Tap to Open</div>
         </div>
     </div>
 
-    <!-- MAIN WEBSITE -->
     <main id="invite">
         
-        <!-- HERO -->
         <section class="section" id="hero">
             <div class="bg-overlay"></div>
             <img src="assets/flower1.png" class="static-flower tl" alt="" />
@@ -286,9 +274,7 @@
                         <h2 class="hero-name-rich">Sahil Sharma</h2>
                         <p class="hero-desc">Grandson of Late Smt Anguri Devi W/o Late Shri Maduram Sharma,<br/>Smt Savitri Devi W/o Shri Satyawan Sharma,<br/>Barot, Kaithal, Haryana</p>
                     </div>
-
                     <div class="hero-weds-center reveal">weds</div>
-
                     <div class="hero-side" id="bride-side">
                         <h2 class="hero-name-rich">Mansi Sharma</h2>
                         <p class="hero-desc">Grand Daughter of Late Smt Kamala Devi W/o Shri Parashram Ji<br/>Smt Anita Sharma W/o Shri Rajesh Sharma,<br/>Ahmadpur Majra, Gohana, Sonipat, Haryana</p>
@@ -298,7 +284,6 @@
             <img src="assets/couple.png" alt="Couple" class="hero-couple reveal" />
         </section>
 
-        <!-- EVENTS -->
         <section class="section" id="events">
             <div class="bg-overlay"></div>
             <img src="assets/flower2.png" class="static-flower tl" alt="" />
@@ -320,7 +305,6 @@
                             <a href="https://maps.app.goo.gl/KSzgVodgMydCuB5Z8" target="_blank" class="btn-loc">Get Directions</a>
                         </div>
                     </div>
-
                     <div class="event-box reveal">
                         <img src="assets/baraat.jpeg" alt="Baraat" class="event-img" />
                         <div class="event-content">
@@ -335,7 +319,6 @@
             </div>
         </section>
 
-        <!-- VENUE -->
         <section class="section" id="venue">
             <div class="bg-overlay"></div>
             <img src="assets/flower1.png" class="static-flower bl" alt="" />
@@ -352,7 +335,6 @@
             </div>
         </section>
 
-        <!-- SCRATCH -->
         <section class="section" id="scratch-section">
             <div class="bg-overlay"></div>
             <img src="assets/flower1.png" class="static-flower tr" alt="" />
@@ -373,7 +355,6 @@
             </div>
         </section>
 
-        <!-- COUNTDOWN -->
         <section class="section" id="countdown">
             <div class="bg-overlay"></div>
             <img src="assets/flower2.png" class="static-flower tl" alt="" />
@@ -400,7 +381,6 @@
             </div>
         </section>
 
-        <!-- FAMILY -->
         <section class="section" id="family">
             <div class="bg-overlay"></div>
             
@@ -448,7 +428,6 @@
         </footer>
     </main>
 
-    <!-- Audios -->
     <audio id="bg-music" loop preload="auto">
         <source src="assets/weddingbg.mpeg" type="audio/mpeg" />
     </audio>
