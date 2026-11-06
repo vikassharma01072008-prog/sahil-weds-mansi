@@ -34,7 +34,7 @@
 
         html, body {
             width: 100%; overflow-x: hidden;
-            background-color: #000;
+            background-color: var(--maroon-deep);
             color: var(--ivory);
             font-family: var(--font-body); -webkit-font-smoothing: antialiased;
         }
@@ -65,12 +65,13 @@
         @keyframes wave { 0% { transform: scale(0.8); opacity: 0.8; } 100% { transform: scale(1.8); opacity: 0; } }
 
         /* ============================================================
-           OPENING VIDEO
+           OPENING VIDEO (FULL SCREEN - NO BLACK BG)
            ============================================================ */
         #opening {
             position: fixed; inset: 0; z-index: 1000;
-            background-color: #000; display: flex; align-items: center; justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             transition: opacity 1.5s ease, visibility 1.5s ease;
+            background-color: #000;
         }
         #opening.opened { opacity: 0; visibility: hidden; pointer-events: none; }
         #opening-video { width: 100%; height: 100%; object-fit: cover; }
@@ -82,21 +83,31 @@
         .video-elephant.left { left: -2%; }
         .video-elephant.right { right: -2%; }
 
+        /* Tap Overlay over Video */
         .tap-overlay {
             position: absolute; inset: 0; z-index: 15;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            background: rgba(43, 6, 10, 0.4); backdrop-filter: blur(3px); cursor: pointer;
-            transition: opacity 0.5s ease;
+            cursor: pointer; transition: opacity 0.5s ease;
+            /* No background color, fully transparent to show video */
         }
         .tap-overlay.hidden { opacity: 0; pointer-events: none; }
+        
         .play-btn {
             width: 90px; height: 90px; border-radius: 50%;
             border: 2px solid var(--gold); display: flex; align-items: center; justify-content: center;
-            background: rgba(196, 154, 69, 0.4); animation: pulseGold 2s infinite;
+            background: rgba(43, 6, 10, 0.6); backdrop-filter: blur(4px);
+            animation: pulseGold 2s infinite;
         }
         .play-btn svg { width: 40px; height: 40px; fill: var(--gold-light); margin-left: 8px; }
-        .tap-text { margin-top: 20px; font-family: var(--font-heading); font-size: 1rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold-light); text-shadow: 0 2px 5px #000; }
-        @keyframes pulseGold { 0%, 100% { box-shadow: 0 0 0 0 rgba(196, 154, 69, 0.7); } 50% { box-shadow: 0 0 0 20px rgba(196, 154, 69, 0); } }
+        .tap-text { 
+            margin-top: 20px; font-family: var(--font-heading); font-size: 1rem; 
+            letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold-light); 
+            text-shadow: 0 2px 5px #000, 0 0 10px #000; 
+        }
+        @keyframes pulseGold { 
+            0%, 100% { box-shadow: 0 0 0 0 rgba(196, 154, 69, 0.7); } 
+            50% { box-shadow: 0 0 0 20px rgba(196, 154, 69, 0); } 
+        }
 
         /* ============================================================
            FALLING FLOWERS (ANIMATION)
@@ -133,7 +144,7 @@
         .peacock-divider { width: 140px; margin: 20px auto; display: block; opacity: 0.9; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5)); }
 
         /* ============================================================
-           STATIC FLOWERS (DECORATION)
+           STATIC DECORATIONS (flower1, flower2)
            ============================================================ */
         .static-flower {
             position: absolute; width: 120px; height: auto; z-index: 2; pointer-events: none; opacity: 0.85;
@@ -143,9 +154,9 @@
         .static-flower.bl { bottom: 0; left: 0; transform: scaleY(-1); }
         .static-flower.br { bottom: 0; right: 0; transform: scale(-1, -1); }
 
-        /* HERO (Palace Visible) */
+        /* HERO */
         #hero { background: url('assets/palace.jpeg') center/cover fixed; }
-        #hero .bg-overlay { position: absolute; inset: 0; background: rgba(253, 251, 247, 0.3); z-index: 1; } /* Very light tint */
+        #hero .bg-overlay { position: absolute; inset: 0; background: rgba(253, 251, 247, 0.25); z-index: 1; } 
 
         .hero-para { font-size: 1.3rem; line-height: 1.6; color: var(--maroon-text); margin-bottom: 30px; font-style: italic; font-weight: 600; position: relative; z-index: 5;}
         .hero-couple-grid { display: flex; flex-direction: column; gap: 30px; margin-bottom: 40px; position: relative; z-index: 5;}
@@ -160,7 +171,7 @@
 
         /* EVENTS */
         #events { background: url('assets/otherbg.jpeg') center/cover fixed; }
-        #events .bg-overlay { position: absolute; inset: 0; background: rgba(43, 6, 10, 0.7); z-index: 1; }
+        #events .bg-overlay { position: absolute; inset: 0; background: rgba(43, 6, 10, 0.75); z-index: 1; }
 
         .events-wrapper { display: grid; grid-template-columns: 1fr; gap: 40px; margin-top: 40px; position: relative; z-index: 5; }
         @media(min-width: 768px) { .events-wrapper { grid-template-columns: 1fr 1fr; } }
@@ -250,6 +261,7 @@
         <img src="assets/elephantleft-removebg-preview.png" class="video-elephant left" alt="" />
         <img src="assets/elephantright-removebg-preview.png" class="video-elephant right" alt="" />
         
+        <!-- Tap Overlay sits directly on video -->
         <div class="tap-overlay" id="tap-overlay">
             <div class="play-btn">
                 <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
@@ -264,13 +276,14 @@
         <!-- HERO -->
         <section class="section" id="hero">
             <div class="bg-overlay"></div>
-            <!-- Static decorations -->
+            
+            <!-- Static Decorations -->
             <img src="assets/flower1.png" class="static-flower tl" alt="" />
-            <img src="assets/flower1.png" class="static-flower br" alt="" />
+            <img src="assets/flower2.png" class="static-flower br" alt="" />
 
             <div class="section-inner">
                 <img src="assets/ganesha.png" alt="" style="width: 140px; margin: 0 auto 15px; position:relative; z-index:5;" class="reveal" />
-                <p class="section-kicker reveal" style="color:var(--maroon-text); font-weight:700; position:relative; z-index:5;">विघ्न हरण मंगल करन श्री गणपति महाराज, प्रथम निमंत्रण आपको पूर्ण करियो काज ||</p>
+                
                 <p class="hero-para reveal">With divine blessings of family<br/>we cordially invite you for celebrating the wedding of</p>
                 
                 <div class="hero-couple-grid">
@@ -294,7 +307,7 @@
         <section class="section" id="events">
             <div class="bg-overlay"></div>
             <img src="assets/flower2.png" class="static-flower tl" alt="" />
-            <img src="assets/flower2.png" class="static-flower br" alt="" />
+            <img src="assets/flower1.png" class="static-flower br" alt="" />
 
             <div class="section-inner">
                 <p class="section-kicker reveal">Save the Dates</p>
@@ -331,7 +344,7 @@
         <section class="section" id="venue">
             <div class="bg-overlay"></div>
             <img src="assets/flower1.png" class="static-flower bl" alt="" />
-            <img src="assets/flower1.png" class="static-flower tr" alt="" />
+            <img src="assets/flower2.png" class="static-flower tr" alt="" />
 
             <div class="section-inner">
                 <p class="section-kicker reveal">The Celebration</p>
@@ -347,7 +360,7 @@
         <!-- SCRATCH -->
         <section class="section" id="scratch-section">
             <div class="bg-overlay"></div>
-            <img src="assets/flower2.png" class="static-flower tr" alt="" />
+            <img src="assets/flower1.png" class="static-flower tr" alt="" />
             <img src="assets/flower2.png" class="static-flower bl" alt="" />
 
             <div class="section-inner">
@@ -368,7 +381,7 @@
         <!-- COUNTDOWN -->
         <section class="section" id="countdown">
             <div class="bg-overlay"></div>
-            <img src="assets/flower1.png" class="static-flower tl" alt="" />
+            <img src="assets/flower2.png" class="static-flower tl" alt="" />
             <img src="assets/flower1.png" class="static-flower br" alt="" />
 
             <div class="section-inner">
@@ -398,7 +411,7 @@
             
             <img src="assets/elephantleft-removebg-preview.png" class="family-elephant left" alt="" />
             <img src="assets/elephantright-removebg-preview.png" class="family-elephant right" alt="" />
-            <img src="assets/flower2.png" class="static-flower tl" alt="" />
+            <img src="assets/flower1.png" class="static-flower tl" alt="" />
             <img src="assets/flower2.png" class="static-flower br" alt="" />
 
             <div class="section-inner">
@@ -463,16 +476,14 @@
         var musicPlaying = false;
         var started = false;
 
-        // 1. TAP TO START (Bypasses all browser audio blocks)
+        // 1. TAP TO START
         tapOverlay.addEventListener('click', function() {
             if (started) return;
             started = true;
 
-            // Hide overlay & Play Video (Unmuted)
             tapOverlay.classList.add('hidden');
             video.play();
 
-            // Play Elephant Sound 3 times
             ellieSound.volume = 0.8;
             ellieSound.play().catch(function() {});
             setTimeout(function() { ellieSound.currentTime = 0; ellieSound.play().catch(function() {}); }, 600);
@@ -485,7 +496,6 @@
             invite.classList.add('visible');
             document.body.style.overflow = '';
             
-            // Start Background Music
             bgMusic.volume = 0.5;
             bgMusic.play().then(function() {
                 musicPlaying = true;
@@ -493,7 +503,6 @@
                 musicBtn.classList.add('visible');
             }).catch(function(e) { console.log('Music blocked:', e); });
 
-            // Trigger Animations
             startHeroAnimations();
             initScrollAnimations();
             createFallingFlowers();
@@ -541,7 +550,6 @@
             
             for (var i = 0; i < numFlowers; i++) {
                 var img = document.createElement('img');
-                // Pick a random falling flower
                 img.src = flowerImgs[Math.floor(Math.random() * flowerImgs.length)];
                 img.className = 'falling-flower';
                 
