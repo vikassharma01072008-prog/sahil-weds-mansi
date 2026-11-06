@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<meta name="theme-color" content="#1a0508" />
+<meta name="theme-color" content="#0a1526" />
 <title>Sahil weds Mansi — Wedding Invitation</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,7 +12,7 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <style>
 /* ============================================================
-   SAHIL WEDS MANSI
+   SAHIL WEDS MANSI — FINAL REBUILD
    ============================================================ */
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{width:100%;overflow-x:hidden;background:#0a1526;color:#f5ecd7;font-family:'Cormorant Garamond',Georgia,serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
@@ -29,7 +29,7 @@ a{color:inherit;text-decoration:none}
 }
 
 /* ============================================================
-   1. VINTAGE TELEPHONE SPEAKER (MUSIC BUTTON)
+   1. VINTAGE SPEAKER & AUDIO
    ============================================================ */
 #music-btn{position:fixed;bottom:24px;right:24px;z-index:9999;width:60px;height:60px;background:var(--navy);border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(0,0,0,.5),0 0 20px rgba(196,154,69,.4);cursor:pointer;transition:all .3s ease}
 #music-btn svg{width:32px;height:32px;fill:var(--gold-lt);transition:all .3s ease}
@@ -41,33 +41,42 @@ a{color:inherit;text-decoration:none}
 @keyframes wave{0%{transform:scale(.8);opacity:.8}100%{transform:scale(1.8);opacity:0}}
 
 /* ============================================================
-   2. OPENING — 3D ENVELOPE & SPLIT
+   2. OPENING — 3D SPLIT & ELEPHANTS
    ============================================================ */
-#opening{position:fixed;inset:0;z-index:1000;background:#1a0508;overflow:hidden;transition:opacity 1.2s ease,visibility 1.2s ease;display:flex;align-items:center;justify-content:center;perspective:2000px}
+#opening{position:fixed;inset:0;z-index:1000;background:var(--navy);overflow:hidden;display:flex;align-items:center;justify-content:center;perspective:2000px;transition:opacity 1s ease,visibility 1s ease}
 #opening.opened{opacity:0;visibility:hidden;pointer-events:none}
-.opening-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,#3e0b12 0%,#1a0508 70%);z-index:1}
 
-.door-stage{position:absolute;inset:0;z-index:5;perspective:1600px;perspective-origin:50% 55%;pointer-events:none}
-.door-panel{position:absolute;top:0;bottom:0;width:50%;background:url('assets/otherbg.jpeg') center/cover;background-color:#0a1526;transform-style:preserve-3d;will-change:transform;box-shadow:inset 0 0 100px rgba(0,0,0,.9);opacity:0;transition:opacity .5s ease}
+/* Elephants permanently on the sides */
+.env-elephant{position:absolute;bottom:5%;width:45vw;max-width:250px;height:auto;z-index:15;pointer-events:none;filter:drop-shadow(0 10px 20px rgba(0,0,0,.8))}
+.env-elephant.left{left:-5%}
+.env-elephant.right{right:-5%}
+
+/* Card Wrapper */
+.card-wrapper{position:relative;z-index:10;width:min(85vw, 400px);aspect-ratio: 9/16;perspective:1800px;cursor:pointer;transition:transform .5s ease}
+#opening.split .card-wrapper{transform:scale(1.1);pointer-events:none}
+
+/* The Frame Image underneath */
+.card-frame-img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:1;z-index:1;filter:drop-shadow(0 20px 40px rgba(0,0,0,.8))}
+#opening.split .card-frame-img{opacity:0;transition:opacity .5s ease}
+
+/* The 3D Halves (Overlays the Frame Image) */
+.card-inner{position:absolute;inset:0;width:100%;height:100%;transform-style:preserve-3d;z-index:2}
+.card-half{position:absolute;top:0;bottom:0;width:50%;background:url('assets/card4.jpeg') center/cover no-repeat;background-size:200% 100%;box-shadow:inset 0 0 20px rgba(0,0,0,.5);backface-visibility:hidden}
+.card-half.left{left:0;transform-origin:left center;border-radius:12px 0 0 12px;background-position:left center}
+.card-half.right{right:0;transform-origin:right center;border-radius:0 12px 12px 0;background-position:right center}
+
+/* Doors Behind */
+.door-stage{position:absolute;inset:0;z-index:5;perspective:1600px;pointer-events:none}
+.door-panel{position:absolute;top:0;bottom:0;width:50%;background:url('assets/palace.jpeg') center/cover;background-color:var(--navy);transform-style:preserve-3d;box-shadow:inset 0 0 100px rgba(0,0,0,.9);opacity:0}
 .door-panel.left{left:0;transform-origin:left center}
 .door-panel.right{right:0;transform-origin:right center}
 #opening.show-doors .door-panel{opacity:1}
-.light-beam{position:absolute;top:0;bottom:0;left:50%;width:0;transform:translateX(-50%);background:radial-gradient(ellipse at 50% 50%,#fff 0%,var(--gold) 40%,transparent 80%);filter:blur(30px);opacity:0;z-index:4;pointer-events:none}
-#opening.split .light-beam{animation:beamGrow 2.5s ease-out forwards}
+
+.light-beam{position:absolute;top:0;bottom:0;left:50%;width:0;transform:translateX(-50%);background:radial-gradient(ellipse at 50% 50%,#fff 0%,var(--gold) 40%,transparent 80%);filter:blur(20px);opacity:0;z-index:4;pointer-events:none}
+#opening.split .light-beam{animation:beamGrow 2s ease-out forwards}
 @keyframes beamGrow{0%{width:0;opacity:0}30%{width:10%;opacity:.8}70%{width:60%;opacity:1}100%{width:150%;opacity:0}}
 
-.card-stage{position:relative;z-index:10;width:min(85vw, 420px);aspect-ratio: 9/16;perspective:1800px;transition:opacity .6s ease,transform .6s ease}
-#opening.split .card-stage{opacity:0;pointer-events:none;transform:scale(1.1)}
-.env-img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;will-change:transform,opacity;pointer-events:none;filter:drop-shadow(0 20px 40px rgba(0,0,0,.8))}
-.env-img.active{opacity:1;pointer-events:auto}
-.env-img.frame-1{animation:float 5s ease-in-out infinite}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-
-.env-elephant{position:absolute;bottom:-10%;width:55%;height:auto;z-index:12;pointer-events:none;filter:drop-shadow(0 10px 20px rgba(0,0,0,.8));opacity:0}
-.env-elephant.left{left:-18%}
-.env-elephant.right{right:-18%}
-
-.tap-hint{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-lt);white-space:nowrap;z-index:20;padding:12px 24px;background:rgba(10,21,38,.85);backdrop-filter:blur(8px);border-radius:99px;border:1px solid rgba(196,154,69,.4);animation:pulse 2s infinite;transition:opacity .3s}
+.tap-hint{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);font-family:'Cinzel',serif;font-size:.8rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-lt);white-space:nowrap;z-index:20;padding:12px 24px;background:rgba(10,21,38,.85);backdrop-filter:blur(8px);border-radius:99px;border:1px solid var(--gold);animation:pulse 2s infinite;transition:opacity .3s}
 @keyframes pulse{0%,100%{opacity:.7}50%{opacity:1}}
 #opening.split .tap-hint{opacity:0}
 
@@ -77,67 +86,69 @@ a{color:inherit;text-decoration:none}
 #invite{opacity:0;position:relative;background:var(--navy);transition:opacity 1.2s ease}
 #invite.visible{opacity:1}
 
-.bg-fixed{position:fixed;inset:0;background:url('assets/otherbg.jpeg') center/cover fixed;z-index:-1}
+/* Fixed Background using palace.jpeg as requested */
+.bg-fixed{position:fixed;inset:0;background:url('assets/palace.jpeg') center/cover fixed;z-index:-1;opacity:0.9}
 .bg-fixed::before{content:"";position:absolute;inset:0;background:rgba(10,21,38,.85)}
 
 .section{position:relative;padding:100px 24px;overflow:hidden;display:flex;flex-direction:column;align-items:center;z-index:2}
 .section-inner{position:relative;max-width:800px;width:100%;z-index:5;text-align:center}
 
 .section-kicker{font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
-.section-title{font-family:'Great Vibes',cursive;font-size:clamp(2.5rem, 8vw, 4rem);color:var(--gold-lt);line-height:1.1;margin-bottom:20px;text-shadow:0 2px 10px rgba(0,0,0,.5)}
+.section-title{font-family:'Great Vibes',cursive;font-size:clamp(2.5rem, 8vw, 4rem);color:var(--gold-lt);line-height:1.1;margin-bottom:20px;text-shadow:0 2px 10px rgba(0,0,0,.8)}
 .divider{width:100px;height:1px;background:linear-gradient(to right, transparent, var(--gold), transparent);margin:20px auto;position:relative}
 .divider::after{content:"❖";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:var(--gold);font-size:.8rem;background:var(--navy);padding:0 8px}
 
 /* HERO */
 #hero{padding-top:120px;padding-bottom:150px}
-.hero-names{font-family:'Cinzel',serif;font-size:clamp(1.6rem, 5vw, 2.4rem);color:#fff;font-weight:600;margin-top:20px}
-.hero-weds{font-family:'Great Vibes',cursive;font-size:clamp(2rem, 6vw, 3rem);color:var(--gold);margin:10px 0}
-.hero-para{font-size:1.1rem; line-height:1.6; color:var(--gold-lt); margin-bottom:30px; font-style:italic}
-.hero-desc{font-size:1rem; color:#ccc; margin-bottom:25px; line-height:1.5}
-.hero-couple{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:80%;max-width:400px;z-index:10;pointer-events:none}
+.hero-names{font-family:'Cinzel',serif;font-size:clamp(1.6rem, 5vw, 2.4rem);color:#fff;font-weight:600;margin-top:20px;text-shadow:0 2px 10px rgba(0,0,0,.5)}
+.hero-weds{font-family:'Great Vibes',cursive;font-size:clamp(2.5rem, 7vw, 3.5rem);color:var(--gold);margin:15px 0;text-shadow:0 2px 10px rgba(0,0,0,.5)}
+.hero-para{font-size:1.2rem; line-height:1.6; color:var(--gold-lt); margin-bottom:30px; font-style:italic; text-shadow:0 1px 5px rgba(0,0,0,.5)}
+.hero-desc{font-size:1rem; color:#fff; margin-bottom:25px; line-height:1.5; text-shadow:0 1px 5px rgba(0,0,0,.5)}
+.hero-couple{position:relative;margin:40px auto 0;width:80%;max-width:400px;z-index:10;pointer-events:none;filter:drop-shadow(0 10px 20px rgba(0,0,0,.5))}
 
 /* EVENTS */
 .events-wrapper{position:relative; max-width:900px; width:100%; display:grid; grid-template-columns:1fr; gap:30px}
 @media(min-width:768px){.events-wrapper{grid-template-columns:1fr 1fr}}
-.event-box{background:var(--navy);border:1px solid rgba(196,154,69,.4);border-radius:12px;overflow:hidden;box-shadow:0 15px 40px rgba(0,0,0,.4);position:relative;display:flex;flex-direction:column}
+.event-box{background:var(--navy);border:1px solid rgba(196,154,69,.4);border-radius:12px;overflow:hidden;box-shadow:0 15px 40px rgba(0,0,0,.6);position:relative;display:flex;flex-direction:column}
 .event-img{width:100%;height:250px;object-fit:cover;border-bottom:2px solid var(--gold)}
 .event-content{padding:30px 20px;text-align:center;flex-grow:1}
-.event-name{font-family:'Cinzel',serif;font-size:1.1rem;letter-spacing:2px;color:var(--gold);margin-bottom:15px;font-weight:600}
-.event-date{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:#fff;line-height:1.2;margin-bottom:8px;font-weight:600}
-.event-date strong{color:var(--gold-lt);font-size:2rem}
+.event-name{font-family:'Cinzel',serif;font-size:1.2rem;letter-spacing:2px;color:var(--gold);margin-bottom:15px;font-weight:600}
+.event-date{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:#fff;line-height:1.2;margin-bottom:8px;font-weight:600}
+.event-date strong{color:var(--gold-lt);font-size:2.2rem}
 .event-time{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:#aaa;margin-bottom:20px;font-style:italic}
 .event-venue{font-family:'Cormorant Garamond',serif;font-size:1rem;line-height:1.5;color:#fff;border-top:1px dashed rgba(196,154,69,.3);padding-top:15px;margin-top:10px}
-.btn-loc{display:inline-flex;align-items:center;gap:8px;margin-top:20px;padding:12px 24px;background:var(--maroon);color:#fff;font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:1px;text-transform:uppercase;border-radius:99px;text-decoration:none;transition:all .3s;box-shadow:0 6px 20px rgba(107,26,35,.3); border:1px solid var(--gold)}
+.btn-loc{display:inline-flex;align-items:center;gap:8px;margin-top:20px;padding:12px 24px;background:var(--maroon);color:#fff;font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:1px;text-transform:uppercase;border-radius:99px;text-decoration:none;transition:all .3s;box-shadow:0 6px 20px rgba(107,26,35,.3); border:1px solid var(--gold)}
 .btn-loc:hover{background:var(--gold);color:var(--navy);transform:translateY(-2px)}
 
 /* VENUE & SCRATCH */
-.venue-card{max-width:400px;margin:0 auto;border:2px solid var(--gold);border-radius:16px;overflow:hidden;position:relative}
+.venue-card{max-width:400px;margin:0 auto;border:2px solid var(--gold);border-radius:16px;overflow:hidden;position:relative;box-shadow:0 20px 50px rgba(0,0,0,.6)}
 .venue-card img{width:100%;height:auto}
 .venue-card .btn-loc{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);background:var(--navy);width:80%}
 
-.scratch-container{position:relative;width:100%;max-width:400px;aspect-ratio:2/1;margin:40px auto;border-radius:12px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.6);border:2px solid var(--gold);background:url('assets/scratchbg.jpeg') center/cover}
-.scratch-text{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--navy);z-index:1;background:rgba(255,255,255,.3);backdrop-filter:blur(2px)}
-.scratch-text h4{font-family:'Cinzel',serif;font-size:.9rem;letter-spacing:2px}
-.scratch-text p{font-family:'Great Vibes',cursive;font-size:2.5rem;line-height:1;color:var(--maroon)}
+.scratch-container{position:relative;width:100%;max-width:400px;aspect-ratio:2/1;margin:40px auto;border-radius:12px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.8);border:2px solid var(--gold);background:url('assets/scratchbg.jpeg') center/cover}
+.scratch-text{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--navy);z-index:1;background:rgba(10,21,38,.4);backdrop-filter:blur(2px)}
+.scratch-text h4{font-family:'Cinzel',serif;font-size:1rem;letter-spacing:2px;color:var(--gold-lt); text-shadow:0 1px 2px #000}
+.scratch-text p{font-family:'Great Vibes',cursive;font-size:3rem;line-height:1;color:#fff; text-shadow:0 1px 5px #000}
 #scratch-canvas{position:absolute;inset:0;z-index:2;cursor:crosshair;touch-action:none}
 
-#countdown .section-inner{padding:50px 20px;background:rgba(10,21,38,.9);border-radius:20px;border:2px solid var(--gold);box-shadow:0 30px 60px rgba(0,0,0,.5);position:relative;overflow:hidden}
+#countdown .section-inner{padding:50px 20px;background:rgba(10,21,38,.95);border-radius:20px;border:2px solid var(--gold);box-shadow:0 30px 60px rgba(0,0,0,.7);position:relative;overflow:hidden}
 .cd-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:30px}
 .cd-box{text-align:center}
 .cd-num{font-family:'Cinzel',serif;font-size:clamp(1.8rem,6vw,3rem);color:var(--gold-lt);font-weight:600;line-height:1;display:block;text-shadow:0 2px 10px rgba(0,0,0,.5)}
-.cd-lbl{font-family:'Cormorant Garamond',serif;font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--ivory);opacity:.8;margin-top:8px;display:block}
+.cd-lbl{font-family:'Cormorant Garamond',serif;font-size:.75rem;letter-spacing:2px;text-transform:uppercase;color:var(--ivory);opacity:.8;margin-top:8px;display:block}
 
 /* FAMILY & FOOTER */
-.family-names{font-family:'Cormorant Garamond',serif;font-size:1.1rem;line-height:1.8;color:#fff}
+.family-names{font-family:'Cormorant Garamond',serif;font-size:1.15rem;line-height:1.8;color:#fff;text-shadow:0 1px 3px #000}
 .family-names span{display:block}
-.rsvp-box{background:rgba(196,154,69,.1);border:1px dashed var(--gold);border-radius:12px;padding:30px;margin-top:30px}
-.rsvp-title{font-family:'Cinzel',serif;font-size:1rem;letter-spacing:2px;color:var(--gold-lt);margin-bottom:10px}
-.rsvp-numbers{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;color:var(--gold-lt)}
+.rsvp-box{background:rgba(196,154,69,.15);border:1px dashed var(--gold);border-radius:12px;padding:30px;margin-top:30px;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.rsvp-title{font-family:'Cinzel',serif;font-size:1.1rem;letter-spacing:2px;color:var(--gold-lt);margin-bottom:10px}
+.rsvp-numbers{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;color:#fff}
 
 #footer{background:var(--navy);padding:50px 20px;text-align:center;border-top:1px solid rgba(196,154,69,.2);position:relative;z-index:5}
-.footer-text{font-family:'Cormorant Garamond',serif;font-size:.95rem; font-style:italic; line-height:1.6; color:var(--gold-lt); opacity:.8; max-width:600px; margin:0 auto}
-.footer-brand{font-family:'Great Vibes',cursive;font-size:1.8rem;color:#fff;margin-top:20px}
+.footer-text{font-family:'Cormorant Garamond',serif;font-size:1rem; font-style:italic; line-height:1.6; color:var(--gold-lt); opacity:.9; max-width:600px; margin:0 auto}
+.footer-brand{font-family:'Great Vibes',cursive;font-size:2rem;color:#fff;margin-top:20px}
 
+/* Animation Classes */
 .reveal{opacity:0;transform:translateY(40px)}
 </style>
 </head>
@@ -154,22 +165,25 @@ a{color:inherit;text-decoration:none}
 </div>
 
 <div id="opening">
-  <div class="opening-bg"></div>
-
   <div class="door-stage">
     <div class="door-panel left"></div>
     <div class="door-panel right"></div>
     <div class="light-beam"></div>
   </div>
 
-  <div class="card-stage" id="opening-card">
-    <img src="assets/elephantleft-removebg-preview.png" class="env-elephant left" id="ellie-left" alt="" />
-    <img src="assets/elephantright-removebg-preview.png" class="env-elephant right" id="ellie-right" alt="" />
+  <!-- Elephants correctly oriented -->
+  <img src="assets/elephantleft-removebg-preview.png" class="env-elephant left" id="ellie-left" alt="" />
+  <img src="assets/elephantright-removebg-preview.png" class="env-elephant right" id="ellie-right" alt="" />
 
-    <img src="assets/card1.jpeg" class="env-img frame-1 active" id="frame1" alt="Card 1" />
-    <img src="assets/card2.jpeg" class="env-img" id="frame2" alt="Card 2" />
-    <img src="assets/card3.jpeg" class="env-img" id="frame3" alt="Card 3" />
-    <img src="assets/card4.jpeg" class="env-img" id="frame4" alt="Card 4" />
+  <div class="card-wrapper" id="opening-card">
+    <!-- Background Image (The closed card) -->
+    <img src="assets/card1.jpeg" class="card-frame-img" id="frame1" alt="Card 1" />
+    
+    <!-- The 3D Split Halves (Hidden initially) -->
+    <div class="card-inner" id="card-split">
+      <div class="card-half left"></div>
+      <div class="card-half right"></div>
+    </div>
   </div>
   
   <div class="tap-hint" id="tap-hint">Tap to Open</div>
@@ -181,7 +195,7 @@ a{color:inherit;text-decoration:none}
   
   <section class="section" id="hero">
     <div class="section-inner">
-      <img src="assets/peacock-removebg-preview.png" alt="" style="width:160px; margin:0 auto 20px; opacity:.9" class="reveal" />
+      <img src="assets/peacock-removebg-preview.png" alt="" style="width:180px; margin:0 auto 20px; opacity:.9; filter:drop-shadow(0 5px 10px rgba(0,0,0,.5))" class="reveal" />
       <p class="section-kicker reveal">विघ्न हरण मंगल करन श्री गणपति महाराज, प्रथम निमंत्रण आपको पूर्ण करियो काज ||</p>
       <p class="hero-para reveal">With divine blessings of family<br/>we cordially invite you for celebrating the wedding of</p>
       
@@ -300,7 +314,7 @@ a{color:inherit;text-decoration:none}
 
       <div class="reveal" style="margin-top:30px">
         <div class="section-kicker">Business Associates</div>
-        <div class="family-names" style="font-size:1rem">
+        <div class="family-names" style="font-size:1.05rem">
           <span>Balaji Steel Industries (Rolling Mill)</span>
           <span>Rahul Steels</span>
           <span>Chennai</span>
@@ -329,236 +343,143 @@ a{color:inherit;text-decoration:none}
   <source src="assets/elephantsound.mpeg" type="audio/mpeg" />
 </audio>
 
-<script>(function(){
+<script>
+(function(){
 'use strict';
 
-if(typeof gsap !== 'undefined'){
-  gsap.registerPlugin(ScrollTrigger);
-}
+if(typeof gsap !== 'undefined'){ gsap.registerPlugin(ScrollTrigger); }
 
-// Target Date: Dec 3, 2026, 3:00 PM IST
 var WEDDING_DATE = new Date('2026-12-03T15:00:00+05:30');
 var DPR = Math.min(window.devicePixelRatio || 1, 2);
 var opened = false;
 
-/* ============================================================
-   1. AUDIO & VINTAGE SPEAKER LOGIC
-   ============================================================ */
+// ==========================================
+// 1. AUDIO LOGIC
+// ==========================================
 var bgMusic = document.getElementById('bg-music');
 var ellieSound = document.getElementById('elephant-sound');
 var musicBtn = document.getElementById('music-btn');
 var musicPlaying = false;
 
-// Play elephant sound 3 times, then start background music
 function playOpeningAudio(){
   if(!ellieSound || !bgMusic) return;
-  
-  // Set volumes
   ellieSound.volume = 0.6;
   bgMusic.volume = 0.5;
-
-  // Play elephant trumpet
-  ellieSound.play().catch(function(e){ console.log('Audio blocked by browser until interaction', e); });
   
-  // Play 2nd and 3rd trumpet with slight delay
-  setTimeout(function(){ 
-    ellieSound.currentTime = 0; 
-    ellieSound.play().catch(function(){}); 
-  }, 600);
-  
-  setTimeout(function(){ 
-    ellieSound.currentTime = 0; 
-    ellieSound.play().catch(function(){}); 
-  }, 1200);
+  ellieSound.play().catch(function(){});
+  setTimeout(function(){ ellieSound.currentTime = 0; ellieSound.play().catch(function(){}); }, 600);
+  setTimeout(function(){ ellieSound.currentTime = 0; ellieSound.play().catch(function(){}); }, 1200);
 
-  // After trumpets, start the background music
   setTimeout(function(){
     bgMusic.play().then(function(){
       musicPlaying = true;
       musicBtn.classList.add('playing');
-    }).catch(function(e){ 
-      console.log('Bg music blocked', e); 
-    });
+    }).catch(function(){});
   }, 2500);
 }
 
-// User interaction to unlock audio (Mobile browsers block auto-play)
 document.body.addEventListener('click', function initAudio(){
-  if(!opened){
-    playOpeningAudio();
-    document.body.removeEventListener('click', initAudio);
-  }
+  if(!opened){ playOpeningAudio(); document.body.removeEventListener('click', initAudio); }
 }, { once: true });
 
-// Toggle music on button click
 musicBtn.addEventListener('click', function(e){
-  e.stopPropagation(); // Prevent triggering the body click
-  if(musicPlaying){
-    bgMusic.pause();
-    musicPlaying = false;
-    musicBtn.classList.remove('playing');
-  } else {
-    bgMusic.play();
-    musicPlaying = true;
-    musicBtn.classList.add('playing');
-  }
+  e.stopPropagation();
+  if(musicPlaying){ bgMusic.pause(); musicPlaying = false; musicBtn.classList.remove('playing'); }
+  else { bgMusic.play(); musicPlaying = true; musicBtn.classList.add('playing'); }
 });
 
-/* ============================================================
-   2. OPENING SEQUENCE (GSAP 3D CARD)
-   ============================================================ */
+// ==========================================
+// 2. OPENING SEQUENCE (GSAP 3D SPLIT)
+// ==========================================
 var opening = document.getElementById('opening');
-var cardStage = document.getElementById('opening-card');
 var tapHint = document.getElementById('tap-hint');
 var invite = document.getElementById('invite');
-
-var frame1 = document.getElementById('frame1');
-var frame2 = document.getElementById('frame2');
-var frame3 = document.getElementById('frame3');
-var frame4 = document.getElementById('frame4');
-var ellieLeft = document.getElementById('ellie-left');
-var ellieRight = document.getElementById('ellie-right');
-
-// Make elephants visible immediately on load
-gsap.set([ellieLeft, ellieRight], { opacity: 1, y: 0 });
+var cardSplit = document.getElementById('card-split');
 
 function openCard(){
   if(opened) return;
   opened = true;
   
   var tl = gsap.timeline({
-    onComplete: function(){
-      opening.style.display = 'none';
-      document.body.style.overflow = '';
-    }
+    onComplete: function(){ opening.style.display = 'none'; document.body.style.overflow = ''; }
   });
 
-  // 1. Hide Tap Hint
-  tl.to(tapHint, { opacity: 0, duration: 0.4 });
+  // 1. Fade out tap hint
+  tl.to(tapHint, { opacity: 0, duration: 0.3 });
 
-  // 2. Smooth 3D Crossfade Sequence
-  // Frame 1 -> Frame 2
-  tl.to(frame1, { opacity: 0, scale: 1.05, duration: 0.6, ease: "power2.inOut" }, 0.2);
-  tl.to(frame2, { opacity: 1, scale: 1, duration: 0.6, ease: "power2.inOut" }, 0.3);
-  
-  // Frame 2 -> Frame 3
-  tl.to(frame2, { opacity: 0, scale: 1.05, duration: 0.6, ease: "power2.inOut" }, 1.0);
-  tl.to(frame3, { opacity: 1, scale: 1, duration: 0.6, ease: "power2.inOut" }, 1.1);
+  // 2. Reveal the split halves (so it looks seamless) and hide the static frame
+  tl.add(function(){ 
+    document.getElementById('frame1').style.opacity = '0'; 
+    cardSplit.style.display = 'block'; 
+  }, 0.3);
 
-  // Frame 3 -> Frame 4
-  tl.to(frame3, { opacity: 0, scale: 1.05, duration: 0.6, ease: "power2.inOut" }, 1.8);
-  tl.to(frame4, { opacity: 1, scale: 1, duration: 0.6, ease: "power2.inOut" }, 1.9);
+  // 3. Open doors behind the card
+  tl.add(function(){ opening.classList.add('show-doors'); }, 0.5);
+  tl.to('.door-panel.left', { rotateY: -105, x: '-20%', duration: 1.5, ease: "power2.inOut" }, 0.6);
+  tl.to('.door-panel.right', { rotateY: 105, x: '20%', duration: 1.5, ease: "power2.inOut" }, 0.6);
 
-  // 3. Zoom into Frame 4 (The actual card)
-  tl.to(cardStage, { scale: 1.15, duration: 1, ease: "power2.inOut" }, 2.8);
+  // 4. THE SPLIT: The card halves swing open like doors
+  tl.to('.card-half.left', { rotateY: -110, duration: 1.8, ease: "power2.inOut" }, 0.8);
+  tl.to('.card-half.right', { rotateY: 110, duration: 1.8, ease: "power2.inOut" }, 0.8);
 
-  // 4. The Split (Card splits left and right)
-  tl.to('#frame4', { clipPath: 'polygon(0 0, 50% 0, 50% 100%, 0 100%)', duration: 0.01 }, 3.8);
-  tl.to('#frame4', { xPercent: -50, rotateY: -30, opacity: 0, duration: 1.5, ease: "power2.in" }, 3.9);
-  
-  // Fade out the elephants as the card opens
-  tl.to([ellieLeft, ellieRight], { xPercent: -100, opacity: 0, duration: 1.2, ease: "power2.in" }, 3.9);
-  tl.to(ellieRight, { xPercent: 100, opacity: 0, duration: 1.2, ease: "power2.in" }, 3.9);
+  // 5. Fade out the elephants as the card opens
+  tl.to('#ellie-left', { xPercent: -100, opacity: 0, duration: 1.2, ease: "power2.in" }, 1.0);
+  tl.to('#ellie-right', { xPercent: 100, opacity: 0, duration: 1.2, ease: "power2.in" }, 1.0);
 
-  // 5. Show Doors behind the card
-  tl.add(function(){ opening.classList.add('show-doors'); }, 3.6);
-  
-  // 6. Doors open
-  tl.to('.door-panel.left', { rotateY: -105, x: '-20%', duration: 1.8, ease: "power2.inOut" }, 4.2);
-  tl.to('.door-panel.right', { rotateY: 105, x: '20%', duration: 1.8, ease: "power2.inOut" }, 4.2);
+  // 6. Light Beam
+  tl.add(function(){ opening.classList.add('split'); }, 1.5);
 
-  // 7. Light Beam
-  tl.add(function(){ opening.classList.add('split'); }, 4.5);
-
-  // 8. Reveal Main Website
+  // 7. Reveal Main Website
   tl.add(function(){
     invite.classList.add('visible');
     startHeroAnimations();
     initScrollAnimations();
-  }, 5.5);
+  }, 2.5);
 
-  tl.to(opening, { opacity: 0, duration: 1, ease: "power2.inOut" }, 5.8);
+  tl.to(opening, { opacity: 0, duration: 1, ease: "power2.inOut" }, 2.8);
 }
 
 opening.addEventListener('click', openCard);
-
-// Initially hide body scroll until opened
 document.body.style.overflow = 'hidden';
 
-/* ============================================================
-   3. HERO & SCROLL ANIMATIONS
-   ============================================================ */
+// ==========================================
+// 3. SCROLL & HERO ANIMATIONS
+// ==========================================
 function startHeroAnimations(){
-  if(typeof gsap === 'undefined') return;
-  var tl = gsap.timeline();
-  tl.to('.reveal', { opacity: 1, y: 0, duration: 1.2, stagger: 0.2, ease: "power3.out" });
+  gsap.to('.reveal', { opacity: 1, y: 0, duration: 1.2, stagger: 0.2, ease: "power3.out" });
 }
-
 function initScrollAnimations(){
-  if(typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-  
-  // Reveal elements on scroll
   gsap.utils.toArray('.reveal').forEach(function(elem){
-    // Skip hero elements that already animated
     if(elem.closest('#hero')) return; 
-    
     gsap.to(elem, {
       y: 0, opacity: 1, duration: 1, ease: "power3.out",
-      scrollTrigger: {
-        trigger: elem,
-        start: "top 85%",
-        toggleActions: "play none none reverse"
-      }
+      scrollTrigger: { trigger: elem, start: "top 85%", toggleActions: "play none none reverse" }
     });
   });
 }
 
-/* ============================================================
-   4. SCRATCH TO REVEAL
-   ============================================================ */
+// ==========================================
+// 4. SCRATCH TO REVEAL
+// ==========================================
 var scratchCanvas = document.getElementById('scratch-canvas');
 if(scratchCanvas){
   var sctx = scratchCanvas.getContext('2d');
-  var scratching = false;
-  var lastX = 0, lastY = 0;
-  var revealed = false;
+  var scratching = false, lastX = 0, lastY = 0, revealed = false;
 
   function setupScratch(){
     var rect = scratchCanvas.parentElement.getBoundingClientRect();
-    scratchCanvas.width = rect.width * DPR;
-    scratchCanvas.height = rect.height * DPR;
-    scratchCanvas.style.width = rect.width + 'px';
-    scratchCanvas.style.height = rect.height + 'px';
+    scratchCanvas.width = rect.width * DPR; scratchCanvas.height = rect.height * DPR;
+    scratchCanvas.style.width = rect.width + 'px'; scratchCanvas.style.height = rect.height + 'px';
     sctx.setTransform(DPR, 0, 0, DPR, 0, 0);
 
-    // Gold Foil Gradient
     var grad = sctx.createLinearGradient(0, 0, rect.width, rect.height);
-    grad.addColorStop(0, '#c49a45');
-    grad.addColorStop(0.25, '#e8d09e');
-    grad.addColorStop(0.5, '#fdfbf7');
-    grad.addColorStop(0.75, '#e8d09e');
-    grad.addColorStop(1, '#c49a45');
-    sctx.fillStyle = grad;
-    sctx.fillRect(0, 0, rect.width, rect.height);
+    grad.addColorStop(0, '#c49a45'); grad.addColorStop(0.5, '#fdfbf7'); grad.addColorStop(1, '#c49a45');
+    sctx.fillStyle = grad; sctx.fillRect(0, 0, rect.width, rect.height);
 
-    // Add subtle texture to gold
-    sctx.globalAlpha = 0.3;
-    for(var i = 0; i < 200; i++){
-      sctx.fillStyle = Math.random() > 0.5 ? '#fff' : '#000';
-      sctx.beginPath();
-      sctx.arc(Math.random() * rect.width, Math.random() * rect.height, Math.random() * 1.5, 0, Math.PI * 2);
-      sctx.fill();
-    }
-    sctx.globalAlpha = 1;
-
-    // Text over gold
-    sctx.fillStyle = 'rgba(107,26,35,0.8)';
-    sctx.font = 'bold 20px "Cinzel", serif';
-    sctx.textAlign = 'center';
-    sctx.textBaseline = 'middle';
+    sctx.fillStyle = 'rgba(107,26,35,0.8)'; sctx.font = 'bold 20px "Cinzel", serif';
+    sctx.textAlign = 'center'; sctx.textBaseline = 'middle';
     sctx.fillText('SCRATCH', rect.width / 2, rect.height / 2 - 10);
-    sctx.font = '600 12px "Cinzel", serif';
-    sctx.fillText('TO REVEAL', rect.width / 2, rect.height / 2 + 15);
+    sctx.font = '600 12px "Cinzel", serif'; sctx.fillText('TO REVEAL', rect.width / 2, rect.height / 2 + 15);
 
     sctx.globalCompositeOperation = 'destination-out';
   }
@@ -569,103 +490,44 @@ if(scratchCanvas){
     var clientY = e.touches ? e.touches[0].clientY : e.clientY;
     return { x: clientX - rect.left, y: clientY - rect.top };
   }
-
-  function scratchAt(x, y){
-    sctx.beginPath();
-    sctx.arc(x, y, 30, 0, Math.PI * 2);
-    sctx.fill();
-  }
-
-  function startScratch(e){
-    if(revealed) return;
-    scratching = true;
-    var pos = getPos(e);
-    lastX = pos.x; lastY = pos.y;
-    scratchAt(lastX, lastY);
-  }
-  
+  function scratchAt(x, y){ sctx.beginPath(); sctx.arc(x, y, 30, 0, Math.PI * 2); sctx.fill(); }
+  function startScratch(e){ if(revealed) return; scratching = true; var pos = getPos(e); lastX = pos.x; lastY = pos.y; scratchAt(lastX, lastY); }
   function moveScratch(e){
-    if(!scratching || revealed) return;
-    e.preventDefault();
-    var pos = getPos(e);
-    var steps = 8;
-    for(var i = 0; i <= steps; i++){
-      var ix = lastX + (pos.x - lastX) * (i / steps);
-      var iy = lastY + (pos.y - lastY) * (i / steps);
-      scratchAt(ix, iy);
-    }
-    lastX = pos.x; lastY = pos.y;
-    checkReveal();
+    if(!scratching || revealed) return; e.preventDefault(); var pos = getPos(e);
+    for(var i = 0; i <= 8; i++){ scratchAt(lastX + (pos.x - lastX) * (i / 8), lastY + (pos.y - lastY) * (i / 8)); }
+    lastX = pos.x; lastY = pos.y; checkReveal();
   }
-  
-  function endScratch(){
-    scratching = false;
-    checkReveal();
-  }
-  
+  function endScratch(){ scratching = false; checkReveal(); }
   function checkReveal(){
-    if(revealed) return;
-    var w = scratchCanvas.width;
-    var h = scratchCanvas.height;
-    var data;
+    if(revealed) return; var w = scratchCanvas.width, h = scratchCanvas.height, data;
     try { data = sctx.getImageData(0, 0, w, h).data; } catch(err){ return; }
     var cleared = 0, total = 0;
-    for(var i = 3; i < data.length; i += 4 * 16){
-      total++;
-      if(data[i] < 40) cleared++;
-    }
-    if(total > 0 && cleared / total > 0.5){
-      revealed = true;
-      gsap.to(scratchCanvas, { opacity: 0, duration: 0.8 });
-    }
+    for(var i = 3; i < data.length; i += 4 * 16){ total++; if(data[i] < 40) cleared++; }
+    if(total > 0 && cleared / total > 0.5){ revealed = true; gsap.to(scratchCanvas, { opacity: 0, duration: 0.8 }); }
   }
 
-  scratchCanvas.addEventListener('mousedown', startScratch);
-  scratchCanvas.addEventListener('mousemove', moveScratch);
-  scratchCanvas.addEventListener('mouseup', endScratch);
-  scratchCanvas.addEventListener('mouseleave', endScratch);
-  scratchCanvas.addEventListener('touchstart', startScratch, { passive: true });
-  scratchCanvas.addEventListener('touchmove', moveScratch, { passive: false });
-  scratchCanvas.addEventListener('touchend', endScratch, { passive: true });
-
+  scratchCanvas.addEventListener('mousedown', startScratch); scratchCanvas.addEventListener('mousemove', moveScratch);
+  scratchCanvas.addEventListener('mouseup', endScratch); scratchCanvas.addEventListener('mouseleave', endScratch);
+  scratchCanvas.addEventListener('touchstart', startScratch, { passive: true }); scratchCanvas.addEventListener('touchmove', moveScratch, { passive: false }); scratchCanvas.addEventListener('touchend', endScratch, { passive: true });
   window.addEventListener('load', function(){ setTimeout(setupScratch, 300); });
-  if(document.readyState === 'complete') setTimeout(setupScratch, 300);
 }
 
-/* ============================================================
-   5. LIVE COUNTDOWN (Baraat: Dec 3, 2026)
-   ============================================================ */
-var elDays = document.getElementById('cd-days');
-var elHours = document.getElementById('cd-hours');
-var elMins = document.getElementById('cd-mins');
-var elSecs = document.getElementById('cd-secs');
-var prevSecs = -1;
-
+// ==========================================
+// 5. COUNTDOWN
+// ==========================================
+var elDays = document.getElementById('cd-days'), elHours = document.getElementById('cd-hours'), elMins = document.getElementById('cd-mins'), elSecs = document.getElementById('cd-secs'), prevSecs = -1;
 function pad(n){ return (n < 10 ? '0' : '') + n; }
-
 function tick(){
-  var now = new Date().getTime();
-  var diff = WEDDING_DATE.getTime() - now;
-  if(diff < 0) diff = 0;
-  
-  var days = Math.floor(diff / 86400000);
-  var hours = Math.floor((diff % 86400000) / 3600000);
-  var mins = Math.floor((diff % 3600000) / 60000);
-  var secs = Math.floor((diff % 60000) / 1000);
-
-  if(elDays) elDays.textContent = pad(days);
-  if(elHours) elHours.textContent = pad(hours);
-  if(elMins) elMins.textContent = pad(mins);
+  var diff = WEDDING_DATE.getTime() - new Date().getTime(); if(diff < 0) diff = 0;
+  if(elDays) elDays.textContent = pad(Math.floor(diff / 86400000));
+  if(elHours) elHours.textContent = pad(Math.floor((diff % 86400000) / 3600000));
+  if(elMins) elMins.textContent = pad(Math.floor((diff % 3600000) / 60000));
   if(elSecs){
-    elSecs.textContent = pad(secs);
-    if(secs !== prevSecs && typeof gsap !== 'undefined'){
-      prevSecs = secs;
-      gsap.fromTo(elSecs.parentElement, { rotateX: -18 }, { rotateX: 0, duration: 0.5, ease: 'power2.out' });
-    }
+    var s = Math.floor((diff % 60000) / 1000); elSecs.textContent = pad(s);
+    if(s !== prevSecs && typeof gsap !== 'undefined'){ prevSecs = s; gsap.fromTo(elSecs.parentElement, { rotateX: -18 }, { rotateX: 0, duration: 0.5, ease: 'power2.out' }); }
   }
 }
-tick();
-setInterval(tick, 1000);
+tick(); setInterval(tick, 1000);
 
 })();
 </script>
