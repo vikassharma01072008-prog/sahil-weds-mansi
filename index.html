@@ -145,13 +145,11 @@
         /* Static decorations */
         .static-flower { position: absolute; width: 120px; height: auto; z-index: 4; pointer-events: none; opacity: 0.85; }
         .static-flower.tl { top: 0; left: 0; transform: rotate(0deg); }
-        .static-flower.tr { top: 0; right: 0; transform: scaleX(-1); }
-        .static-flower.bl { bottom: 0; left: 0; transform: scaleY(-1); }
-        .static-flower.br { bottom: 0; right: 0; transform: scale(-1, -1); }
+        .static-flower.tr { top: 0; right: 0; transform: rotate(0deg); }
 
         /* HERO */
         #hero .bg-img-wrap img { object-position: center 20%; }
-        #hero .bg-overlay { background: rgba(253, 251, 247, 0.3); } /* Light tint to see palace */
+        #hero .bg-overlay { background: rgba(253, 251, 247, 0.3); }
 
         .hero-para { font-size: 1.3rem; line-height: 1.6; color: var(--maroon-text); margin-bottom: 30px; font-style: italic; font-weight: 700; position: relative; z-index: 5;}
         .hero-couple-grid { display: flex; flex-direction: column; gap: 30px; margin-bottom: 40px; position: relative; z-index: 5;}
@@ -186,9 +184,11 @@
         /* VENUE */
         #venue .bg-overlay { background: rgba(43, 6, 10, 0.8); }
 
-        .venue-card { max-width: 450px; margin: 0 auto; border: 2px solid var(--gold); border-radius: 16px; overflow: hidden; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.8); z-index: 5; }
+        .venue-card { max-width: 450px; margin: 0 auto 30px auto; border: 2px solid var(--gold); border-radius: 16px; overflow: hidden; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.8); z-index: 5; }
         .venue-card img { width: 100%; display: block; }
-        .venue-card .btn-loc { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); background-color: rgba(43, 6, 10, 0.95); width: 85%; }
+        
+        .venue-text-box { background-color: rgba(43, 6, 10, 0.95); border: 1px solid var(--gold); border-radius: 16px; padding: 30px 20px; max-width: 450px; margin: 0 auto; position: relative; z-index: 5; }
+        .venue-address { font-family: var(--font-body); font-size: 1.2rem; line-height: 1.6; color: #ffffff; margin-bottom: 20px; }
 
         /* SCRATCH */
         #scratch-section .bg-overlay { background: rgba(43, 6, 10, 0.6); }
@@ -224,9 +224,19 @@
         .rsvp-box { background-color: rgba(196, 154, 69, 0.1); border: 1px dashed var(--gold); border-radius: 12px; padding: 30px 20px; margin-top: 40px; position: relative; z-index: 5; }
         .rsvp-numbers { font-family: var(--font-body); font-size: 1.6rem; font-weight: 600; color: var(--gold-light); }
 
+        /* FOOTER & SPECIAL FLOWER2 */
         #footer { background-color: #1a0306; padding: 50px 20px; text-align: center; border-top: 1px solid rgba(196, 154, 69, 0.2); position: relative; z-index: 5; }
+        
+        /* Flower 2 Horizontal Orientation */
+        .footer-flower-wrap { width: 100%; display: flex; justify-content: center; margin-bottom: 30px; position: relative; }
+        .footer-flower-line { position: absolute; top: 50%; left: 10%; right: 10%; height: 1px; background: rgba(196, 154, 69, 0.3); z-index: 1; }
+        .footer-flower-img { width: 180px; position: relative; z-index: 2; transform: rotate(-90deg); }
+
         .footer-text { font-family: var(--font-body); font-size: 1.1rem; font-style: italic; line-height: 1.7; color: var(--gold-light); opacity: 0.9; max-width: 700px; margin: 0 auto; }
-        .footer-brand { font-family: var(--font-script); font-size: 2.5rem; color: #ffffff; margin-top: 30px; }
+        .footer-brand { font-family: var(--font-script); font-size: 2.5rem; color: #ffffff; margin-top: 20px; }
+        
+        .vaan-credit { display: block; margin-top: 30px; font-family: var(--font-body); font-size: 0.9rem; color: var(--gold); opacity: 0.7; text-decoration: none; transition: opacity 0.3s; }
+        .vaan-credit:hover { opacity: 1; }
 
         .reveal { opacity: 0; transform: translateY(50px); }
     </style>
@@ -254,11 +264,13 @@
 
     <main id="invite">
         
+        <!-- PAGE 1: HERO -->
         <section class="section" id="hero">
-            <div class="bg-img-wrap"><img src="assets/palace.jpeg" alt="Palace BG" /></div>
+            <div class="bg-img-wrap"><img src="assets/bg1.jpeg" alt="Palace BG" /></div>
             <div class="bg-overlay"></div>
+            
             <img src="assets/flower1.png" class="static-flower tl" alt="" />
-            <img src="assets/flower2.png" class="static-flower br" alt="" />
+            <img src="assets/flower2.png" class="static-flower tr" alt="" />
 
             <div class="section-inner">
                 <img src="assets/ganesha.png" alt="" style="width: 140px; margin: 0 auto 15px; position:relative; z-index:5;" class="reveal" />
@@ -267,7 +279,7 @@
                 <div class="hero-couple-grid">
                     <div class="hero-side" id="groom-side">
                         <h2 class="hero-name-rich">Sahil Sharma</h2>
-                        <p class="hero-desc">Grandson of Late Smt Anguri Devi W/o Late Shri Maduram Sharma,<br/>Smt Savitri Devi W/o Shri Satyawan Sharma,<br/>Barot, Kaithal, Haryana</p>
+                        <p class="hero-desc">Grandson of Late Smt Anguri Devi W/o Late Shri Maduram Sharma Ji,<br/>Smt Savitri Devi W/o Shri Satyawan Sharma,<br/>Barot, Kaithal, Haryana</p>
                     </div>
                     <div class="hero-weds-center reveal">weds</div>
                     <div class="hero-side" id="bride-side">
@@ -279,11 +291,13 @@
             <img src="assets/couple.png" alt="Couple" class="hero-couple reveal" />
         </section>
 
+        <!-- PAGE 2: EVENTS -->
         <section class="section" id="events">
-            <div class="bg-img-wrap"><img src="assets/otherbg.jpeg" alt="Events BG" /></div>
+            <div class="bg-img-wrap"><img src="assets/bg2.jpeg" alt="Events BG" /></div>
             <div class="bg-overlay"></div>
-            <img src="assets/flower2.png" class="static-flower tl" alt="" />
-            <img src="assets/flower1.png" class="static-flower br" alt="" />
+            
+            <img src="assets/flower1.png" class="static-flower tl" alt="" />
+            <img src="assets/flower2.png" class="static-flower tr" alt="" />
 
             <div class="section-inner">
                 <p class="section-kicker reveal">Save the Dates</p>
@@ -315,28 +329,37 @@
             </div>
         </section>
 
+        <!-- PAGE 3: VENUE -->
         <section class="section" id="venue">
-            <div class="bg-img-wrap"><img src="assets/palace.jpeg" alt="Palace BG" /></div>
+            <div class="bg-img-wrap"><img src="assets/bg1.jpeg" alt="Palace BG" /></div>
             <div class="bg-overlay"></div>
-            <img src="assets/flower1.png" class="static-flower bl" alt="" />
+            
+            <img src="assets/flower1.png" class="static-flower tl" alt="" />
             <img src="assets/flower2.png" class="static-flower tr" alt="" />
 
             <div class="section-inner">
                 <p class="section-kicker reveal">The Celebration</p>
                 <h2 class="section-title reveal">Vivah Sthal</h2>
                 <img src="assets/peacock-removebg-preview.png" class="peacock-divider reveal" alt="" />
+                
                 <div class="venue-card reveal">
                     <img src="assets/venue.jpeg" alt="Venue" />
+                </div>
+                
+                <div class="venue-text-box reveal">
+                    <p class="venue-address">Wedstation by 5 Senses Hotels & Resort,<br/>Israna Panipat, Haryana</p>
                     <a href="https://maps.app.goo.gl/ZUoLPJZBLwBQ2sjL8" target="_blank" class="btn-loc">Get Directions</a>
                 </div>
             </div>
         </section>
 
+        <!-- PAGE 4: SCRATCH & COUNTDOWN -->
         <section class="section" id="scratch-section">
-            <div class="bg-img-wrap"><img src="assets/scratchbg.jpeg" alt="Scratch BG" /></div>
+            <div class="bg-img-wrap"><img src="assets/bg2.jpeg" alt="Events BG" /></div>
             <div class="bg-overlay"></div>
-            <img src="assets/flower1.png" class="static-flower tr" alt="" />
-            <img src="assets/flower2.png" class="static-flower bl" alt="" />
+            
+            <img src="assets/flower1.png" class="static-flower tl" alt="" />
+            <img src="assets/flower2.png" class="static-flower tr" alt="" />
 
             <div class="section-inner">
                 <p class="section-kicker reveal">A Special Date</p>
@@ -354,10 +377,11 @@
         </section>
 
         <section class="section" id="countdown">
-            <div class="bg-img-wrap"><img src="assets/otherbg.jpeg" alt="Events BG" /></div>
+            <div class="bg-img-wrap"><img src="assets/bg2.jpeg" alt="Events BG" /></div>
             <div class="bg-overlay"></div>
-            <img src="assets/flower2.png" class="static-flower tl" alt="" />
-            <img src="assets/flower1.png" class="static-flower br" alt="" />
+            
+            <img src="assets/flower1.png" class="static-flower tl" alt="" />
+            <img src="assets/flower2.png" class="static-flower tr" alt="" />
 
             <div class="section-inner">
                 <p class="section-kicker reveal">Counting down to the</p>
@@ -380,14 +404,15 @@
             </div>
         </section>
 
+        <!-- PAGE 5: FAMILY -->
         <section class="section" id="family">
-            <div class="bg-img-wrap"><img src="assets/otherbg.jpeg" alt="Events BG" /></div>
+            <div class="bg-img-wrap"><img src="assets/bg2.jpeg" alt="Events BG" /></div>
             <div class="bg-overlay"></div>
             
             <img src="assets/elephantleft-removebg-preview.png" class="family-elephant left" alt="" />
             <img src="assets/elephantright-removebg-preview.png" class="family-elephant right" alt="" />
+            
             <img src="assets/flower1.png" class="static-flower tl" alt="" />
-            <img src="assets/flower2.png" class="static-flower br" alt="" />
 
             <div class="section-inner">
                 <p class="section-kicker reveal">With Warm Regards & Blessings</p>
@@ -423,8 +448,16 @@
         </section>
 
         <footer id="footer">
+            <!-- Horizontal Flower 2 decoration -->
+            <div class="footer-flower-wrap reveal">
+                <div class="footer-flower-line"></div>
+                <img src="assets/flower2.png" class="footer-flower-img" alt="" />
+            </div>
+
             <p class="footer-text">Blessings are the only gifts we pursue, our happiest day needs a hug from you, mark your calendars, set the date we can't wait to see you at the gate! We look forward to share this beautiful moment with you & your family.</p>
             <p class="footer-brand">Sharma Family</p>
+            
+            <a href="https://vaanconsultancy.in" target="_blank" class="vaan-credit">by VAAN Consultancy</a>
         </footer>
     </main>
 
@@ -450,7 +483,7 @@
         var musicPlaying = false;
         var started = false;
 
-        // 1. TAP TO START
+        // 1. TAP TO START (Plays Elephant Once)
         tapOverlay.addEventListener('click', function() {
             if (started) return;
             started = true;
@@ -460,8 +493,6 @@
 
             ellieSound.volume = 0.8;
             ellieSound.play().catch(function() {});
-            setTimeout(function() { ellieSound.currentTime = 0; ellieSound.play().catch(function() {}); }, 600);
-            setTimeout(function() { ellieSound.currentTime = 0; ellieSound.play().catch(function() {}); }, 1200);
         });
 
         // 2. WHEN VIDEO ENDS, START MUSIC & REVEAL SITE
@@ -515,7 +546,7 @@
             });
         }
 
-        // 5. FALLING FLOWERS
+        // 5. FALLING FLOWERS (USING FALLING1, 2, 3)
         function createFallingFlowers() {
             var container = document.getElementById('flower-container');
             var numFlowers = window.innerWidth < 500 ? 15 : 25;
