@@ -193,7 +193,7 @@
         /* SCRATCH */
         #scratch-section .bg-overlay { background: rgba(43, 6, 10, 0.6); }
 
-        .scratch-container { position: relative; width: 100%; max-width: 450px; aspect-ratio: 2/1; margin: 40px auto; border-radius: 12px; overflow: hidden; border: 2px solid var(--gold); box-shadow: 0 20px 50px rgba(0,0,0,0.8); z-index: 5; }
+        .scratch-container { position: relative; width: 100%; max-width: 450px; aspect-ratio: 2/1; margin: 40px auto; border-radius: 12px; overflow: hidden; border: 2px solid var(--gold); box-shadow: 0 20px 50px rgba(0,0,0,0.8); z-index: 5; background: url('assets/scratchbg.jpeg') center/cover; }
         .scratch-text { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1; background: rgba(43, 6, 10, 0.4); backdrop-filter: blur(2px); }
         .scratch-text h4 { font-family: var(--font-heading); font-size: 1rem; letter-spacing: 2px; color: var(--gold-light); text-shadow: 0 1px 2px #000; }
         .scratch-text p { font-family: var(--font-script); font-size: 3.5rem; color: #fff; text-shadow: 0 2px 10px #000; }
@@ -215,8 +215,8 @@
         #family .bg-overlay { background: rgba(43, 6, 10, 0.9); }
 
         .family-elephant { position: absolute; bottom: 0; width: 35vw; max-width: 250px; opacity: 0.15; z-index: 2; pointer-events: none; }
-        .family-elephant.left { left: 0; }
-        .family-elephant.right { right: 0; transform: scaleX(-1); }
+        .family-elephant.left { left: 0; bottom: -20px; }
+        .family-elephant.right { right: 0; bottom: 0; transform: scaleX(-1); }
 
         .family-list { list-style: none; padding: 0; margin: 0 auto 40px auto; max-width: 400px; position: relative; z-index: 5; }
         .family-list li { font-family: var(--font-body); font-size: 1.2rem; line-height: 1.8; color: #ffffff; margin-bottom: 10px; border-bottom: 1px dotted rgba(196,154,69,0.3); padding-bottom: 5px; }
@@ -225,17 +225,20 @@
         .rsvp-numbers { font-family: var(--font-body); font-size: 1.6rem; font-weight: 600; color: var(--gold-light); }
 
         /* FOOTER & SPECIAL FLOWER2 */
-        #footer { background-color: #1a0306; padding: 50px 20px; text-align: center; border-top: 1px solid rgba(196, 154, 69, 0.2); position: relative; z-index: 5; }
+        #footer { background-color: #1a0306; padding: 50px 20px 80px 20px; text-align: center; border-top: 1px solid rgba(196, 154, 69, 0.2); position: relative; z-index: 5; }
         
-        /* Flower 2 Horizontal Orientation */
-        .footer-flower-wrap { width: 100%; display: flex; justify-content: center; margin-bottom: 30px; position: relative; }
-        .footer-flower-line { position: absolute; top: 50%; left: 10%; right: 10%; height: 1px; background: rgba(196, 154, 69, 0.3); z-index: 1; }
-        .footer-flower-img { width: 180px; position: relative; z-index: 2; transform: rotate(-90deg); }
-
         .footer-text { font-family: var(--font-body); font-size: 1.1rem; font-style: italic; line-height: 1.7; color: var(--gold-light); opacity: 0.9; max-width: 700px; margin: 0 auto; }
-        .footer-brand { font-family: var(--font-script); font-size: 2.5rem; color: #ffffff; margin-top: 20px; }
         
-        .vaan-credit { display: block; margin-top: 30px; font-family: var(--font-body); font-size: 0.9rem; color: var(--gold); opacity: 0.7; text-decoration: none; transition: opacity 0.3s; }
+        /* Horizontal Flower Line for "Sharma Family" */
+        .footer-brand-wrap { position: relative; display: inline-block; margin-top: 30px; }
+        .footer-line { position: absolute; top: 50%; left: -50px; right: -50px; height: 1px; background: rgba(196,154,69,0.3); z-index: 1; }
+        .footer-brand { font-family: var(--font-script); font-size: 2.5rem; color: #ffffff; position: relative; z-index: 2; background: #1a0306; padding: 0 15px; }
+        
+        /* Flower on the line above Sharma Family */
+        .footer-flower-deco { position: absolute; top: 50%; left: -60px; transform: translateY(-50%); width: 40px; z-index: 3; }
+        .footer-flower-deco-right { position: absolute; top: 50%; right: -60px; transform: translateY(-50%); width: 40px; z-index: 3; }
+
+        .vaan-credit { display: block; margin-top: 40px; font-family: var(--font-body); font-size: 0.9rem; color: var(--gold); opacity: 0.7; text-decoration: none; transition: opacity 0.3s; }
         .vaan-credit:hover { opacity: 1; }
 
         .reveal { opacity: 0; transform: translateY(50px); }
@@ -413,6 +416,7 @@
             <img src="assets/elephantright-removebg-preview.png" class="family-elephant right" alt="" />
             
             <img src="assets/flower1.png" class="static-flower tl" alt="" />
+            <img src="assets/flower2.png" class="static-flower tr" alt="" />
 
             <div class="section-inner">
                 <p class="section-kicker reveal">With Warm Regards & Blessings</p>
@@ -447,15 +451,17 @@
             </div>
         </section>
 
+        <!-- FOOTER -->
         <footer id="footer">
-            <!-- Horizontal Flower 2 decoration -->
-            <div class="footer-flower-wrap reveal">
-                <div class="footer-flower-line"></div>
-                <img src="assets/flower2.png" class="footer-flower-img" alt="" />
+            <!-- Horizontal Flower Line for "Sharma Family" -->
+            <div class="footer-brand-wrap reveal">
+                <div class="footer-line"></div>
+                <img src="assets/flower2.png" class="footer-flower-deco" alt="" />
+                <img src="assets/flower2.png" class="footer-flower-deco-right" alt="" />
+                <p class="footer-brand">Sharma Family</p>
             </div>
 
-            <p class="footer-text">Blessings are the only gifts we pursue, our happiest day needs a hug from you, mark your calendars, set the date we can't wait to see you at the gate! We look forward to share this beautiful moment with you & your family.</p>
-            <p class="footer-brand">Sharma Family</p>
+            <p class="footer-text reveal" style="margin-top: 40px;">Blessings are the only gifts we pursue, our happiest day needs a hug from you, mark your calendars, set the date we can't wait to see you at the gate! We look forward to share this beautiful moment with you & your family.</p>
             
             <a href="https://vaanconsultancy.in" target="_blank" class="vaan-credit">by VAAN Consultancy</a>
         </footer>
@@ -546,7 +552,7 @@
             });
         }
 
-        // 5. FALLING FLOWERS (USING FALLING1, 2, 3)
+        // 5. FALLING FLOWERS
         function createFallingFlowers() {
             var container = document.getElementById('flower-container');
             var numFlowers = window.innerWidth < 500 ? 15 : 25;
